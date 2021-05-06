@@ -38,6 +38,11 @@ p {
     box-sizing: border-box;
 }
 
+
+img {
+    max-width: 100%;
+}
+
 @media all and (max-width: 800px) {
     .welcome-area > div {
         margin-right: 0;

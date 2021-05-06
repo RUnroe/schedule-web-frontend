@@ -50,7 +50,9 @@ button.link {
     font-size: 0.95rem;
 }
 
-
+img {
+    max-width: 100%;
+}
 
 
 @media all and (max-width: 800px) {
