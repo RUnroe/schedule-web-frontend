@@ -151,20 +151,19 @@ img::after {
   
 .input-label {
     padding-left: 10px;
-    margin-bottom: 0.25rem;
     font-family: 'Reem Kufi', sans-serif;
     display: block;
 }
   
 .input-field {
     display: block;
-    border: none;
     /* Cursed but forces round edges no matter the height of the element */
     border-radius: 100vh;
     padding: 0.5rem 1rem;
     background-color: var(--color-light);
     color: var(--color-brown-dark);
     font-family: 'Reem Kufi', sans-serif;
+    border: 2px solid var(--color-brown-dark);
 }
   
 input:focus,

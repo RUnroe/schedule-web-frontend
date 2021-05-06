@@ -25,7 +25,45 @@
         </div>
     </nav>
     <div class="content section">
-        
+        <div class="image-area">
+
+        </div>
+        <div class="form-area">
+            <div class="form-block">
+                <label class="input-label" for="emailInput">Email</label>
+                <input class="input-field" type="text" id="emailInput" />
+                <span id="emailErrorMsg" class="error-message hidden">Invalid email</span> 
+            </div>
+            <div class="form-block">
+                <label class="input-label" for="fNameInput">First Name</label>
+                <input class="input-field" type="text" id="fNameInput" />
+                <span id="fNameErrorMsg" class="error-message hidden">Invalid name</span> 
+            </div>
+            <div class="form-block">
+                <label class="input-label" for="lNameInput">Last Name</label>
+                <input class="input-field" type="text" id="lNameInput" />
+                <span id="lNameErrorMsg" class="error-message hidden">Invalid name</span> 
+            </div>
+            <div class="form-block">
+                <label class="input-label" for="passInput">Password</label>
+                <input class="input-field" type="password" id="passInput" />
+                <span id="passErrorMsg" class="error-message hidden">Invalid password (8 characters, 1 letter, and 1 number)</span> 
+            </div>
+            <div class="form-block">
+                <label class="input-label" for="confirmPassInput">Confirm Password</label>
+                <input class="input-field" type="password" id="confirmPassInput" />
+                <span id="confirmPassErrorMsg" class="error-message hidden">Passwords do not match</span> 
+            </div>
+            <div class="form-block">
+                <label class="input-label">User Icon</label>
+                <label class="input-label file-input btn light">Upload Image
+                    <input type="file" name="newUserIcon" accept="image/png, image/jpeg, image/jpg, image/svg" />
+                </label>
+                <span id="iconErrorMsg" class="error-message hidden">Incorrect file type</span> 
+
+            </div>
+            <button class="btn cta" id="createAccountBtn">Create Account</button>
+        </div>
     </div>
     <footer>
         <p> Joe Reed, Ryan Unroe, Cody Ashby</p>
