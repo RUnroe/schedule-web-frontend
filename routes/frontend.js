@@ -1,11 +1,6 @@
 const path = require('path');
 const fileDirectory = path.resolve(__dirname, '.', '../public/html/');
 
-const index = (req, res) => {
-    res.sendFile("index.html", {
-      root: fileDirectory
-    });
-  };
 
 
 const requireAuth = (req, res, next) => {
@@ -26,11 +21,39 @@ const requireNotAuth = (req, res, next) => {
     next();
 };
 
+
+const index = (req, res) => {
+    res.sendFile("index.html", {
+      root: fileDirectory
+    });
+};
+const signup = (req, res) => {
+    res.sendFile("signup.html", {
+      root: fileDirectory
+    });
+};
+const login = (req, res) => {
+    res.sendFile("login.html", {
+      root: fileDirectory
+    });
+};
+
+
 const routes = [
     {
       uri: "/",
       methods: ["get"],
       handler: [requireNotAuth, index]
+    },
+    {
+        uri: "/signup",
+        methods: ["get"],
+        handler: [requireNotAuth, signup]
+    },
+    {
+        uri: "/login",
+        methods: ["get"],
+        handler: [requireNotAuth, login]
     },
     
 ];
