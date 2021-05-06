@@ -1,0 +1,161 @@
+:root {
+    --color-brown-dark: #4F2717;
+    --color-brown-medium: #B58E78;
+    --color-tan: #F8E6CB;
+    --color-light: #FFFAF2;
+    
+    --color-danger: #FF5F5F;
+
+    --color-user-1: #B3E0FE;
+  }
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Reem Kufi', sans-serif;
+}
+
+body {
+    height:100%;
+  }
+  
+
+button {
+    font-family: 'Reem Kufi', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Itim', cursive;
+}
+.hidden {
+    visibility: hidden;
+}
+
+
+.error-message {
+    color: var(--color-danger);
+    font-size: 0.9em;
+    font-family: 'Reem Kufi', sans-serif;
+    display: block;
+    margin-top: 0.3em;
+}
+  
+
+.delete {
+    color: var(--color-light);
+    cursor:pointer;
+    font-size: 1.3rem;
+    transition: color 0.15s ease;
+}
+.delete:hover {
+    color: var(--color-danger);
+}
+
+/* ================
+      Buttons
+===================*/
+
+.btn {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 100vh;
+    text-align: center;
+    padding: 0.4em 0.7em;
+    border: 2px solid var(--color-brown-dark);
+}
+
+.btn.light {
+    color: var(--color-brown-dark);
+    background-color: var(--color-light);
+}
+
+.btn.cta {
+    color: var(--color-light);
+    background-color: var(--color-brown-medium);
+}
+
+
+
+/* ================
+      images
+===================*/
+.img-circle {
+    border-radius: 100%;
+}
+
+.img-small {
+    height: 100px;
+    width: 100px;
+}
+  
+.img-medium {
+    height: 150px;
+    width: 150px;
+}
+  
+.img-large {
+    height: 200px;
+    width: 200px;
+}
+  
+.img {
+    min-height: 100%;
+    min-width: 100%;
+}
+img {
+	position: relative;
+}
+img::after {
+	content: '';
+	/* background-image: url(/images/Cat_Broken_Icon.svg); */
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-size: 110%;
+	background-position: center;
+}
+
+/* ================
+      form
+===================*/
+
+.input-label.file-input {
+    display: inline-block;
+    margin-bottom: 0;
+}
+.file-input > input {
+    display:none;
+}
+  
+  
+.input-label {
+    padding-left: 10px;
+    margin-bottom: 0.25rem;
+    font-family: 'Reem Kufi', sans-serif;
+    display: block;
+}
+  
+.input-field {
+    display: block;
+    border: none;
+    /* Cursed but forces round edges no matter the height of the element */
+    border-radius: 100vh;
+    padding: 0.5rem 1rem;
+    font-family: 'Reem Kufi', sans-serif;
+}
+  
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
+    outline: none;
+}
+  
+/* Div wrap each label and input */
+.form-block {
+    margin-bottom: 1rem;
+}
