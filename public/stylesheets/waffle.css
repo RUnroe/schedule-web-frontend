@@ -18,6 +18,7 @@ html, body {
 
 body {
     height:100%;
+    color: var(--color-brown-dark);
   }
   
 
@@ -145,6 +146,8 @@ img::after {
     /* Cursed but forces round edges no matter the height of the element */
     border-radius: 100vh;
     padding: 0.5rem 1rem;
+    background-color: var(--color-light);
+    color: var(--color-brown-dark);
     font-family: 'Reem Kufi', sans-serif;
 }
   
