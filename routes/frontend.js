@@ -4,11 +4,12 @@ const fileDirectory = path.resolve(__dirname, '.', '../public/html/');
 
 
 const requireAuth = (req, res, next) => {
-    if (req.session.user_id) {
-        next();
-    } else {
-        res.redirect("/");
-    }
+    // if (req.session.user_id) {
+    //     next();
+    // } else {
+    //     res.redirect("/");
+    // }
+    next();
 };
 
 // if they're already logged in, redirect them to /app
@@ -39,6 +40,28 @@ const login = (req, res) => {
 };
 
 
+const appPage = (req, res) => {
+    res.sendFile("app.html", {
+      root: fileDirectory
+    });
+};
+const settings = (req, res) => {
+    res.sendFile("settings.html", {
+      root: fileDirectory
+    });
+};
+const accountSettings = (req, res) => {
+    res.sendFile("accountSettings.html", {
+      root: fileDirectory
+    });
+};
+const friends = (req, res) => {
+    res.sendFile("friends.html", {
+      root: fileDirectory
+    });
+};
+
+
 const routes = [
     {
       uri: "/",
@@ -55,6 +78,26 @@ const routes = [
         methods: ["get"],
         handler: [requireNotAuth, login]
     },
+    {
+        uri: "/app",
+        methods: ["get"],
+        handler: [requireAuth, appPage]
+    },
+    {
+        uri: "/settings",
+        methods: ["get"],
+        handler: [requireAuth, settings]
+    },
+    {
+        uri: "/account/settings",
+        methods: ["get"],
+        handler: [requireAuth, accountSettings]
+    },
+    {
+        uri: "/friends",
+        methods: ["get"],
+        handler: [requireAuth, friends]
+    }
     
 ];
 
