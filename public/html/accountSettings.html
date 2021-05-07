@@ -15,12 +15,50 @@
 <body>
     <header>
         <div class="section">
-            <div class="back-arrow"></div>
+            <div class="back-arrow"> <img src="../images/arrow.svg" /> </div>
             <h1>Account Settings</h1>
         </div>
     </header>
     <div class="content section">
+        <div class="image-area">
+            <div>
+                <div class="img-circle img-large">
+                    <img class="img" id="profileImg" src="https://via.placeholder.com/350" />
+                </div>
+                <button id="removeImageBtn" class="link">remove</button>
+                <button id="logoutBtn" class="btn light">Logout</button>
+            </div>
+        </div>
+        <div class="form-area">
+            <div class="form-block">
+                <label class="input-label" for="emailInput">Email</label>
+                <input class="input-field" type="text" id="emailInput" disabled />
+                <span id="emailErrorMsg" class="error-message hidden">Invalid email</span> 
+            </div>
+            <div class="form-block">
+                <label class="input-label" for="fNameInput">First Name</label>
+                <input class="input-field" type="text" id="fNameInput" />
+                <span id="fNameErrorMsg" class="error-message hidden">Invalid name</span> 
+            </div>
+            <div class="form-block">
+                <label class="input-label" for="lNameInput">Last Name</label>
+                <input class="input-field" type="text" id="lNameInput" />
+                <span id="lNameErrorMsg" class="error-message hidden">Invalid name</span> 
+            </div>
+            
+            <div class="form-block">
+                <label class="input-label">User Icon</label>
+                <label class="input-label file-input btn light">Upload Image
+                    <input type="file" name="newUserIcon" accept="image/png, image/jpeg, image/jpg, image/svg" />
+                </label>
+                <span id="iconErrorMsg" class="error-message hidden">Incorrect file type</span> 
 
+            </div>
+        </div>
+    </div>
+    <div class="button-area">
+        <button class="btn light" id="cancelBtn">Cancel</button>
+        <button class="btn cta" id="saveBtn">Save Changes</button>
     </div>
 </body>
 </html>
