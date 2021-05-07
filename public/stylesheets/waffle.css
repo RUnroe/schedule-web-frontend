@@ -232,3 +232,10 @@ footer {
     align-items: center;
     color: var(--color-tan);
 }
+
+
+@media all and (max-width: 500px ) {
+    html, body {
+        font-size: 0.9em;
+    }
+}

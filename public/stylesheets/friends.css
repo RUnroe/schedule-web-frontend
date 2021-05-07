@@ -1,0 +1,54 @@
+body {
+    background-color: var(--color-tan);
+    height:100%;
+    display:grid;
+    grid-template-rows: 5rem 3.5rem auto 3em;
+    padding-bottom: 1rem;
+    box-sizing: border-box;
+}
+
+header {
+    text-align: center;
+    background-color: var(--color-brown-medium);
+    color: var(--color-light);
+    position: relative;
+}
+
+header h1 {
+    margin:0;
+    padding: 0.8rem 0 1.2rem 0;
+}
+h1 {
+    font-size: 2.4rem;
+
+}
+.back-arrow {
+    height: 2em;
+    width:0.9rem;
+    position:absolute;
+    transform: translate(-50%, -50%);
+    top:53%;
+    left: 2rem;
+    z-index: 3;
+    cursor: pointer;
+}
+
+.button-area {
+    display:flex;
+    justify-content: space-evenly;
+}
+
+.search-container {
+    background-color: var(--color-brown-medium);
+    padding-bottom: 1.5rem;
+}
+#friendSearchInput {
+    margin:0 auto;
+    width:90%;
+    max-width: 600px;
+    box-sizing: border-box;
+}
+
+.content {
+    width:100%;
+}
