@@ -38,7 +38,9 @@ p {
     box-sizing: border-box;
 }
 
-
+h1 {
+    font-size: 3.2em;
+}
 img {
     max-width: 100%;
 }

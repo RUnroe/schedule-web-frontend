@@ -1,0 +1,13 @@
+body {
+    background-color: var(--color-tan);
+}
+
+header {
+    text-align: center;
+    background-color: var(--color-brown-medium);
+    color: var(--color-light);
+}
+header h1 {
+    margin:0;
+    padding: 1rem 0;
+}
