@@ -1,5 +1,10 @@
 body {
     background-color: var(--color-tan);
+    height:100%;
+    display:grid;
+    grid-template-rows: 4.5em auto 3em;
+    padding-bottom: 1rem;
+    box-sizing: border-box;
 }
 
 header {
@@ -32,7 +37,39 @@ header h1 {
 }
 
 
+
 .calendar-list-area {
     max-width: 800px;
     margin: 0 auto;
+    width:100%;
+}
+.calendar-item {
+    display:grid;
+    grid-template-columns: 8fr 14fr 1fr;
+    border-bottom: 2px solid var(--color-brown-medium);
+    padding:1rem 1rem 0.8rem 1rem;
+}
+.calendar-item p {
+    margin:0;
+}
+.calendar-item .delete {
+    text-align: center;
+}
+
+
+.form-block {
+    max-width: 500px;
+    margin:0 auto 1rem auto;
+    width:100%;
+}
+.form-block > .input-field {
+    width:100%;
+    box-sizing: border-box;
+}
+.error-message {
+    text-align: center;
+}
+#createCalendarBtn {
+    display:block;
+    margin:0.5rem auto;
 }

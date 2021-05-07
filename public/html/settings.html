@@ -19,40 +19,38 @@
             <h1>Settings</h1>
         </div>
     </header>
-    <div class="content section">
-        <div class="calendar-list-area">
-            <h2>My Calendars</h2>
-            <div id="calendarList">
-                <!-- Populate based on current user -->
-                <div class="calendar-item">
-                    <p>Work Calendar</p>
-                    <p>Link to the work calendar ics</p>
-                    <div class="delete">X</div>
-                </div>
-                <div class="calendar-item">
-                    <p>Work Calendar</p>
-                    <p>Link to the work calendar ics</p>
-                    <div class="delete">X</div>
-                </div>
+    <div class="calendar-list-area">
+        <h2>My Calendars</h2>
+        <div id="calendarList">
+            <!-- Populate based on current user -->
+            <div class="calendar-item">
+                <p>Work Calendar</p>
+                <p class="ics">Link to the work calendar ics</p>
+                <span class="delete">X</span>
             </div>
-            <div class="add-calendar-area">
-                <h2>Add a Calendar</h2>
-                <div class="form-block">
-                    <label class="input-label" for="nameInput">Name</label>
-                    <input class="input-field" type="text" id="nameInput" placeholder="Name of Calendar"/>
-                </div>
-                <div class="form-block">
-                    <label class="input-label" for="icsInput">ICS Link</label>
-                    <input class="input-field" type="text" id="icsInput" placeholder="Link to ICS" />
-                </div>
-                <span id="ErrorMsg" class="error-message hidden">Invalid ICS link</span> 
-                <button class="btn light">Create</button>
+            <div class="calendar-item">
+                <p>Work Calendar</p>
+                <p class="ics">Link to the work calendar ics</p>
+                <span class="delete">X</span>
             </div>
         </div>
-        <div class="button-area">
-            <button class="btn light" id="cancelBtn">Cancel</button>
-            <button class="btn cta" id="saveBtn">Save Changes</button>
+        <div class="add-calendar-area">
+            <h2>Add a Calendar</h2>
+            <div class="form-block">
+                <label class="input-label" for="nameInput">Name</label>
+                <input class="input-field" type="text" id="nameInput" placeholder="Name of Calendar"/>
+            </div>
+            <div class="form-block">
+                <label class="input-label" for="icsInput">ICS Link</label>
+                <input class="input-field" type="text" id="icsInput" placeholder="Link to ICS" />
+            </div>
+            <span id="ErrorMsg" class="error-message hidden">Invalid ICS link</span> 
+            <button class="btn light" id="createCalendarBtn">Create</button>
         </div>
+    </div>
+    <div class="button-area">
+        <button class="btn light" id="cancelBtn">Cancel</button>
+        <button class="btn cta" id="saveBtn">Save Changes</button>
     </div>
 </body>
 </html>
