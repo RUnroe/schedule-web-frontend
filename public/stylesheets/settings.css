@@ -6,8 +6,33 @@ header {
     text-align: center;
     background-color: var(--color-brown-medium);
     color: var(--color-light);
+    position: relative;
 }
+
 header h1 {
     margin:0;
-    padding: 1rem 0;
+    padding: 0.8rem 0 1.2rem 0;
+    font-size: 2.4rem;
+}
+
+.back-arrow {
+    height: 2em;
+    width:0.9rem;
+    position:absolute;
+    transform: translate(-50%, -50%);
+    top:53%;
+    left: 2rem;
+    z-index: 3;
+    cursor: pointer;
+}
+
+.button-area {
+    display:flex;
+    justify-content: space-evenly;
+}
+
+
+.calendar-list-area {
+    max-width: 800px;
+    margin: 0 auto;
 }
