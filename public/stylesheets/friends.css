@@ -20,6 +20,7 @@ header h1 {
 }
 h1 {
     font-size: 2.4rem;
+    text-align: center;
 
 }
 .back-arrow {
@@ -51,4 +52,40 @@ h1 {
 
 .content {
     width:100%;
+    box-sizing: border-box;
+}
+
+
+.friends-list-section {
+    max-width: 800px;
+    margin: 0 auto;
+    width:100%;
+    box-sizing: border-box;
+}
+
+
+.friend-item {
+    display:grid;
+    grid-template-columns: 1fr 4em;
+    border-bottom: 2px solid var(--color-brown-medium);
+    padding:1rem 1rem 0.7rem 1rem;
+    box-sizing: border-box;
+
+    
+}
+.friend-item p {
+    margin:auto 0;
+}
+.friend-item > .btn-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+.friend-item .delete, .friend-item .accept {
+    text-align: center;
+}
+
+#allFriends .btn-area {
+    justify-content: flex-end;
 }
