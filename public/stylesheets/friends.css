@@ -67,22 +67,37 @@ h1 {
 
 .friend-item {
     display:grid;
-    grid-template-columns: 1fr 4em;
+    grid-template-columns:3rem 1fr 4em;
     border-bottom: 2px solid var(--color-brown-medium);
     padding:1rem 1rem 0.7rem 1rem;
     box-sizing: border-box;
 
-    
 }
+
+
 .friend-item p {
     margin:auto 0;
 }
+.friend-item > p {
+    margin-left:1rem;
+}
+
+.img-circle {
+    width:100%;
+}
+
+
 .friend-item > .btn-area {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     box-sizing: border-box;
 }
+
+.friend-item > .btn-area > div {
+    margin: auto 0;
+}
+
 .friend-item .delete, .friend-item .accept {
     text-align: center;
 }

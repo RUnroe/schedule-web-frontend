@@ -10,13 +10,16 @@
     <link rel="stylesheet" href="../stylesheets/waffle.css" />
     <link rel="stylesheet" href="../stylesheets/friends.css" />
 
+    <script defer src="../scripts/data.js"></script>
+    <script defer src="../scripts/friends.js"></script>
+
     <title>Waffle! - Friends</title>
 </head>
 <body>
     <header>
         <div class="section">
             <div class="back-arrow"> <img src="../images/arrow.svg" /> </div>
-            <h1>Search For Friends</h1>
+            <h1 id="pageTitle">Search For Friends</h1>
         </div>
     </header>
     <div class="search-container">
@@ -28,11 +31,14 @@
             <div id="searchResultsList">
                 <!-- Auto populated based on search term -->
             </div>
-            <div class="current-friends-list">
+            <div id="currentFriendsList" class="current-friends-list">
                 <h2>Pending Friends</h2>
                 <div id="pendingFriends">
                     <!-- Auto populated based on pending friends -->
                     <div class="friend-item">
+                        <div class="img-circle">
+                            <img class="img" id="profileImg" src="https://via.placeholder.com/150" />
+                        </div>
                         <p>Friend name</p>
                         <div class="btn-area">
                             <div class="accept">&#10004;</div>
@@ -44,6 +50,9 @@
                 <div id="allFriends">
                     <!-- Auto populated based on all friends -->
                     <div class="friend-item">
+                        <div class="img-circle">
+                            <img class="img" id="profileImg" src="https://via.placeholder.com/150" />
+                        </div>
                         <p>Friend name</p>
                         <div class="btn-area">
                             <div class="delete">&#10006;</div>
