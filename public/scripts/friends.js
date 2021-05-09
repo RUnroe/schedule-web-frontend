@@ -65,10 +65,76 @@ const populateResultsList = data => {
 }
 
 
+
 const generateFriendItem = (friend, type) => {
-    
+    let container = document.createElement("div");
+    container.classList.add("friend-item");
+
+    let imageContainer = document.createElement("div");
+    imageContainer.classList.add("img-circle");
+
+    let image = document.createElement("img");
+    image.classList.add("img");
+    image.id  = "profileImg";
+    image.src = friend.icon;
+    imageContainer.appendChild(image);
+
+    let name = document.createElement("p");
+    name.innerHTML = friend.name;
+
+    let btnArea = document.createElement("div");
+    btnArea.classList.add("btn-area");
+
+
+    if(type == "pending") {
+        let acceptBtn = document.createElement("div");
+        acceptBtn.classList.add("accept");
+        acceptBtn.innerHTML = "&#10004;";
+        acceptBtn.addEventListener("click", () => {acceptFriendRequest(friend.id)});
+        btnArea.appendChild(acceptBtn);
+
+        let declineBtn = document.createElement("div");
+        declineBtn.classList.add("delete");
+        declineBtn.innerHTML = "&#10006;";
+        declineBtn.addEventListener("click", () => {declineFriendRequest(friend.id)});
+        btnArea.appendChild(declineBtn);
+    }
+    else if(type == "current") {
+        let removeBtn = document.createElement("div");
+        removeBtn.classList.add("delete");
+        removeBtn.innerHTML = "&#10006;";
+        removeBtn.addEventListener("click", () => {removeFriend(friend.id)});
+        btnArea.appendChild(removeBtn);
+    }
+    else {
+        let addBtn = document.createElement("div");
+        addBtn.classList.add("accept");
+        addBtn.innerHTML = "+";
+        addBtn.addEventListener("click", () => {addFriend(friend.id)});
+        btnArea.appendChild(addBtn);
+    }
+
+    container.appendChild(imageContainer);
+    container.appendChild(name);
+    container.appendChild(btnArea);
+    return container;
 }
 
+
+const acceptFriendRequest = () => {
+    //fetch request to accept request. Do not know what info to send yet
+}
+
+const declineFriendRequest = () => {
+    //fetch request to decline request. Do not know what info to send yet
+}
+
+const addFriend = () => {
+    //fetch request to add friend. Do not know what info to send yet
+}
+const removeFriend = () => {
+    //fetch request to remove friend. Do not know what info to send yet
+}
 
 
 document.getElementById("friendSearchInput").addEventListener("input", () => {updateResultList()});
