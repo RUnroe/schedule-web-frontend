@@ -42,7 +42,8 @@ const createCalendarItem = calendar => {
     //Image came from https://fontawesome.com/icons/pencil-alt. Color has been modified.
     editBtn.innerHTML = `<img src="../images/pencil-alt-solid.svg" />`;
     editBtn.addEventListener("click", () => {
-        enterEditMode(calendar.id);
+        if(document.getElementById(calendar.id).dataset.editMode === "true") exitEditMode();
+        else enterEditMode(calendar.id);
     });
     btnGroup.appendChild(editBtn);
 
@@ -77,11 +78,47 @@ const addCalendar = (name, ics) => {
 }
 
 const enterEditMode = (id) => {
+    console.log("enter");
 
+    const calendarItem = document.getElementById(id);
+    let icsText = calendarItem.getElementsByClassName("calendar-ics")[0].innerHTML;
+    calendarItem.getElementsByClassName("calendar-ics")[0].remove();
+    let icsInput = document.createElement("input");
+    icsInput.classList.add("calendar-ics");
+    icsInput.value = icsText;
+    calendarItem.prepend(icsInput);
+    
+    let nameText = calendarItem.getElementsByClassName("calendar-name")[0].innerHTML;
+    calendarItem.getElementsByClassName("calendar-name")[0].remove();
+    let nameInput = document.createElement("input");
+    nameInput.classList.add("calendar-name");
+    nameInput.value = nameText;
+    calendarItem.prepend(nameInput);
+
+    calendarItem.dataset.editMode = true;
 }
 
 const exitEditMode = () => {
+    console.log("exit");
+    document.getElementById("calendarList").childNodes.forEach(calendarItem => {
+        let icsText = calendarItem.childNodes[1].value;
+        calendarItem.childNodes[1].remove();
+        let icsDisplay = document.createElement("p");
+        icsDisplay.classList.add("calendar-ics");
+        icsDisplay.innerHTML = icsText;
+        
+        
+        let nameText = calendarItem.childNodes[0].value;
+        calendarItem.childNodes[0].remove();
+        let nameDisplay = document.createElement("p");
+        nameDisplay.classList.add("calendar-name");
+        nameDisplay.innerHTML = nameText;
 
+        calendarItem.prepend(icsDisplay);
+        calendarItem.prepend(nameDisplay);
+
+        calendarItem.dataset.editMode = false;
+    });
 }
 
 
