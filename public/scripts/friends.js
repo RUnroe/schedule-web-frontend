@@ -75,7 +75,7 @@ const generateFriendItem = (friend, type) => {
 
     let image = document.createElement("img");
     image.classList.add("img");
-    image.id  = "profileImg";
+    // image.id  = "profileImg";
     image.src = friend.icon;
     imageContainer.appendChild(image);
 
