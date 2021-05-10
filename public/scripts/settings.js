@@ -33,6 +33,19 @@ const createCalendarItem = calendar => {
     calendarICS.classList.add("calendar-ics");
     calendarICS.innerHTML = calendar.ics;
 
+    let btnGroup = document.createElement("div");
+    btnGroup.classList.add("btn-group");
+
+    let editBtn = document.createElement("span");
+    editBtn.classList.add("accept");
+    editBtn.classList.add("edit-btn");
+    //Image came from https://fontawesome.com/icons/pencil-alt. Color has been modified.
+    editBtn.innerHTML = `<img src="../images/pencil-alt-solid.svg" />`;
+    editBtn.addEventListener("click", () => {
+        enterEditMode(calendar.id);
+    });
+    btnGroup.appendChild(editBtn);
+
     calendarItem.appendChild(calendarICS);
     let deleteBtn = document.createElement("span");
     deleteBtn.classList.add("delete");
@@ -40,7 +53,9 @@ const createCalendarItem = calendar => {
     deleteBtn.addEventListener("click", () => {
         removeCalendar(calendar.id);
     });
-    calendarItem.appendChild(deleteBtn);
+
+    btnGroup.appendChild(deleteBtn);
+    calendarItem.appendChild(btnGroup);;
     return calendarItem;
 }
 
@@ -69,9 +84,7 @@ const exitEditMode = () => {
 
 }
 
-const generateCalendarItem = () => {
 
-}
 
 
 const backToApp = () => {
