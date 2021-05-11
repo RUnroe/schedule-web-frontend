@@ -102,18 +102,22 @@ const exitEditMode = () => {
     console.log("exit");
     document.getElementById("calendarList").childNodes.forEach(calendarItem => {
         if(calendarItem.dataset.editMode === "true") {
+            let jsonCalendar = userCalendarList.filter(cal => cal.id == calendarItem.id)[0];
+
+
             let icsText = calendarItem.childNodes[1].value;
             calendarItem.childNodes[1].remove();
             let icsDisplay = document.createElement("p");
             icsDisplay.classList.add("calendar-ics");
-            icsDisplay.innerHTML = icsText;
-            
+            if(isIcsValid(icsText))icsDisplay.innerHTML = icsText;
+            else icsDisplay.innerHTML = jsonCalendar.ics;
             
             let nameText = calendarItem.childNodes[0].value;
             calendarItem.childNodes[0].remove();
             let nameDisplay = document.createElement("p");
             nameDisplay.classList.add("calendar-name");
-            nameDisplay.innerHTML = nameText;
+            if(isTextValid(nameText)) nameDisplay.innerHTML = nameText;
+            else nameDisplay.innerHTML = jsonCalendar.name;
 
             calendarItem.prepend(icsDisplay);
             calendarItem.prepend(nameDisplay);
