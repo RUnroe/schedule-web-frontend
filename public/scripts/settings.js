@@ -101,24 +101,39 @@ const enterEditMode = (id) => {
 const exitEditMode = () => {
     console.log("exit");
     document.getElementById("calendarList").childNodes.forEach(calendarItem => {
-        let icsText = calendarItem.childNodes[1].value;
-        calendarItem.childNodes[1].remove();
-        let icsDisplay = document.createElement("p");
-        icsDisplay.classList.add("calendar-ics");
-        icsDisplay.innerHTML = icsText;
-        
-        
-        let nameText = calendarItem.childNodes[0].value;
-        calendarItem.childNodes[0].remove();
-        let nameDisplay = document.createElement("p");
-        nameDisplay.classList.add("calendar-name");
-        nameDisplay.innerHTML = nameText;
+        if(calendarItem.dataset.editMode === "true") {
+            let icsText = calendarItem.childNodes[1].value;
+            calendarItem.childNodes[1].remove();
+            let icsDisplay = document.createElement("p");
+            icsDisplay.classList.add("calendar-ics");
+            icsDisplay.innerHTML = icsText;
+            
+            
+            let nameText = calendarItem.childNodes[0].value;
+            calendarItem.childNodes[0].remove();
+            let nameDisplay = document.createElement("p");
+            nameDisplay.classList.add("calendar-name");
+            nameDisplay.innerHTML = nameText;
 
-        calendarItem.prepend(icsDisplay);
-        calendarItem.prepend(nameDisplay);
+            calendarItem.prepend(icsDisplay);
+            calendarItem.prepend(nameDisplay);
 
-        calendarItem.dataset.editMode = false;
+            calendarItem.dataset.editMode = false;
+
+            userCalendarList = userCalendarList.map( object => {
+                if(object.id == calendarItem.id) {
+                    let newObject = {
+                        id: object.id,
+                        name: nameText,
+                        ics: icsText
+                    }
+                    return newObject;
+                } 
+                return object;
+            })
+        }
     });
+
 }
 
 
