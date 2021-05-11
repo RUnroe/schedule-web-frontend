@@ -84,3 +84,12 @@ header h1 {
     display:flex;
     padding-bottom: 0.2em;
 }
+
+#calendarList {
+    padding: 0.5rem 0;
+}
+
+#calendarList > p {
+    text-align: center;
+    color: var(--color-brown-medium);
+}

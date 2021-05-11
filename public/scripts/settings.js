@@ -9,6 +9,7 @@ const getCalendarList = () => {
     .then((data) => {
         userCalendarList = data;
         updateCalendarListDisplay();
+        checkIfListIsEmpty();
     });
 }
 
@@ -65,6 +66,7 @@ const removeCalendar = (id) => {
     document.getElementById(id).remove();
     //remove from global list
     userCalendarList = userCalendarList.filter((cal) => (cal.id != id));
+    checkIfListIsEmpty();
 }
 
 const addCalendar = (name, ics) => {
@@ -73,6 +75,7 @@ const addCalendar = (name, ics) => {
         name,
         ics
    }
+   if(userCalendarList.length == 0) document.getElementById("calendarList").innerHTML = "";
    document.getElementById("calendarList").appendChild(createCalendarItem(newCalendar));
    userCalendarList.push(newCalendar);
 }
@@ -142,7 +145,14 @@ const exitEditMode = () => {
 }
 
 
-
+const checkIfListIsEmpty = () => {
+    if(userCalendarList.length == 0) {
+        document.getElementById("calendarList").innerHTML = "";
+        let text = document.createElement("p");
+        text.innerHTML = "You do not have any calendars. Add one below!";
+        document.getElementById("calendarList").appendChild(text);
+    }
+}
 
 const backToApp = () => {
     window.location.href = "/app";
