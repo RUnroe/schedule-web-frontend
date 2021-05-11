@@ -120,6 +120,7 @@ const exitEditMode = () => {
 
             calendarItem.dataset.editMode = false;
 
+            //save to list
             userCalendarList = userCalendarList.map( object => {
                 if(object.id == calendarItem.id) {
                     let newObject = {
@@ -158,10 +159,34 @@ const saveChanges = () => {
     backToApp();
 }
 
+const isTextValid = text => {
+    if(text.length > 0) {
+        return true;
+    }
+    document.getElementById("ErrorMsg").innerHTML = "Please give the calendar a name";
+    return false;
+}
+
+const isIcsValid = ics => {
+    if( ics.includes(".ics")) {
+        return true;
+    }
+    document.getElementById("ErrorMsg").innerHTML = "Invalid ICS link";
+    return false;
+}
+
 document.getElementById("createCalendarBtn").addEventListener("click", () => {
     const name = document.getElementById("nameInput").value;
     const ics = document.getElementById("icsInput").value;
-    addCalendar(name, ics);
+    if(isTextValid(name) && isIcsValid(ics)) {
+        if(!document.getElementById("ErrorMsg").classList.contains("hidden")) document.getElementById("ErrorMsg").classList.add("hidden");
+        addCalendar(name, ics);
+        document.getElementById("nameInput").value = "";
+        document.getElementById("icsInput").value = "";
+    }
+    else {
+        if(document.getElementById("ErrorMsg").classList.contains("hidden")) document.getElementById("ErrorMsg").classList.remove("hidden");
+    }
 });
 
 document.getElementById("saveBtn").addEventListener("click", () => {saveChanges();});
