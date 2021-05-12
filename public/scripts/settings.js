@@ -39,7 +39,7 @@ const createCalendarItem = calendar => {
 
     let editBtn = document.createElement("span");
     editBtn.classList.add("accept");
-    editBtn.classList.add("edit-btn");
+    editBtn.classList.add("icon-btn");
     //Image came from https://fontawesome.com/icons/pencil-alt. Color has been modified.
     editBtn.innerHTML = `<img src="../images/pencil-alt-solid.svg" />`;
     editBtn.addEventListener("click", () => {
@@ -51,7 +51,8 @@ const createCalendarItem = calendar => {
     calendarItem.appendChild(calendarICS);
     let deleteBtn = document.createElement("span");
     deleteBtn.classList.add("delete");
-    deleteBtn.innerHTML = "&#10006;";
+    deleteBtn.classList.add("icon-btn");
+    deleteBtn.innerHTML = `<img src="../images/trash.svg" />`;
     deleteBtn.addEventListener("click", () => {
         removeCalendar(calendar.id);
     });

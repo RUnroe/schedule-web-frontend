@@ -79,10 +79,14 @@ header h1 {
     justify-content: space-between;
 }
 
-.edit-btn {
+.icon-btn {
     width:0.95em;
     display:flex;
     padding-bottom: 0.2em;
+}
+.delete.icon-btn {
+    padding: 0.05rem 0.05rem 0.25rem 0.05rem;
+    box-sizing: border-box; 
 }
 
 #calendarList {
