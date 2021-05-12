@@ -2,64 +2,67 @@ body {
     background-color: var(--color-brown-medium);
 }
 
+  
 .main-grid {
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
     box-sizing: border-box;
-    margin:0;
-    padding:0;
-    display:grid;
+    margin: 0;
+    padding: 0;
+    display: grid;
     grid-template-columns: 12rem auto;
-    grid-template-rows: 3.5rem 7rem auto;
+    grid-template-rows: 3.5rem auto;
     grid-template-areas: "topbar  topbar"
-                         "leftbar headers"
-                         "leftbar calendar";
+        "leftbar calendar";
 }
+
 .top-bar {
     grid-area: topbar;
     background-color: var(--color-brown-medium);
-    display:flex;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.top-bar > div {
-    display:flex;
+
+.top-bar>div {
+    display: flex;
     flex-direction: row;
 }
 
 .profile {
     background-color: var(--color-light);
     border-radius: 5px;
-    padding:0 0.5rem;
+    padding: 0 0.5rem;
     min-width: 100px;
     height: 80%;
     margin: auto 0 auto 4rem;
-    display:flex;
+    display: flex;
     flex-direction: row;
     box-sizing: border-box;
     align-items: center;
     cursor: pointer;
 }
 
-.profile > .img-circle {
-    width:2rem;
-    height:2rem;
+.profile>.img-circle {
+    width: 2rem;
+    height: 2rem;
 }
-.profile > p {
-    margin:0 0.5rem;
+
+.profile>p {
+    margin: 0 0.5rem;
 }
 
 #calendarViewModeSelect {
     height: 80%;
     margin: auto 0.5rem;
-    padding:0 0.5rem;
+    padding: 0 0.5rem;
     background-color: var(--color-light);
-    outline:none;
-    border:none;
+    outline: none;
+    border: none;
     border-radius: 5px;
     color: var(--color-brown-dark);
     font-family: 'Reem Kufi', sans-serif;
-    
+
 }
 
 
@@ -74,22 +77,126 @@ body {
     font-size: 1.4rem;
 }
 
-.headers-container {
-    grid-area: headers;
-    background-color: var(--color-tan);
-    border-top-left-radius: 15px;
-
+.tan-text {
+    color: var(--color-tan);
 }
+
+
+
 
 .calendar-view {
     grid-area: calendar;
     background-color: var(--color-brown-medium);
+    border-top-left-radius: 15px;
+    overflow-x:hidden;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.calendar-view::-webkit-scrollbar {
+    display: none;
 }
 
 
-
 .settings-icon {
-    width:1.8rem;
-    margin:0.5rem;
+    width: 1.8rem;
+    margin: 0.5rem;
     cursor: pointer;
+}
+
+
+ol, li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.calendar-month {
+    position: relative;
+    background-color: var(--color-light);
+    border: solid 1px var(--color-brown-medium);
+}
+
+.calendar-month-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--color-tan);
+    padding: 10px;
+}
+
+.calendar-month-header-selected-month {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.calendar-month-header-selectors {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80px;
+}
+
+.calendar-month-header-selectors>* {
+    cursor: pointer;
+}
+
+.day-of-week {
+    color: var(--color-brown-dark);
+    font-size: 18px;
+    background-color: var(--color-tan);
+    padding-bottom: 5px;
+    padding-top: 10px;
+}
+
+.day-of-week, .days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day-of-week > * {
+    text-align: right;
+    padding-right: 5px;
+}
+
+.days-grid {
+    height: 100%;
+    position: relative;
+    grid-column-gap: var(--grid-gap);
+    grid-row-gap: var(--grid-gap);
+    border-top: solid 1px var(--color-brown-medium);
+}
+
+.calendar-day {
+    position: relative;
+    min-height: 100px;
+    font-size: 16px;
+    background-color: var(--color-light);
+    color: var(--color-brown-dark);
+    padding: 5px;
+}
+
+.calendar-day > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 2px;
+    width: 20px;
+    height: 20px;
+}
+
+.calendar-day--not-current {
+    background-color: var(--color-tan);
+    color: var(--color-brown-medium);
+}
+
+.calendar-day--today {
+    padding-top: 4px;
+}
+
+.calendar-day--today>span {
+    color: var(--color-light);
+    border-radius: 100vh;
+    background-color: var(--color-brown-medium);
+    padding: 0.15rem;
 }

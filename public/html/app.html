@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="../stylesheets/app.css" />
 
     <script defer src="../scripts/data.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous"></script>
+
+
     <script defer src="../scripts/app.js"></script>
     
     <title>Waffle! - Calendar</title>
@@ -33,21 +36,13 @@
             </select>
         </div>
 
-        <div class="headers-container">
-            <div class="calendar-controls">
-
-            </div>
-            <div class="column-headers">
-
-            </div>
-        </div>
-
         <div class="left-bar">
             <div class="your-calendars">
                 <h2>Your Calendars</h2>
                 <div id="yourCalendarList">
 
                 </div>
+                <p class="tan-text">Modify calendars in settings</p>
             </div>
             <div class="friend-calendars">
                 <h2>Friends Calendars</h2>
@@ -57,7 +52,7 @@
             </div>
         </div>
 
-        <div class="calendar-view">
+        <div class="calendar-view" id="calendarView">
 
         </div>
     </div>
