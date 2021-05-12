@@ -44,10 +44,9 @@ WEEKDAYS.forEach((weekday) => {
     weekDayElement.innerText = weekday;
 });
 
-createCalendar();
-initMonthSelectors();
 
-function createCalendar(year = INITIAL_YEAR, month = INITIAL_MONTH) {
+
+const createCalendar = (year = INITIAL_YEAR, month = INITIAL_MONTH) => {
     const calendarDaysElement = document.getElementById("calendar-days");
 
     document.getElementById("selected-month").innerText = dayjs(
@@ -73,7 +72,7 @@ function createCalendar(year = INITIAL_YEAR, month = INITIAL_MONTH) {
     });
 }
 
-function appendDay(day, calendarDaysElement) {
+const appendDay = (day, calendarDaysElement) => {
     const dayElement = document.createElement("li");
     dayElement.id = day.date;
     const dayElementClassList = dayElement.classList;
@@ -92,7 +91,7 @@ function appendDay(day, calendarDaysElement) {
     }
 }
 
-function removeAllDayElements(calendarDaysElement) {
+const removeAllDayElements = (calendarDaysElement) => {
     let first = calendarDaysElement.firstElementChild;
 
     while (first) {
@@ -101,11 +100,11 @@ function removeAllDayElements(calendarDaysElement) {
     }
 }
 
-function getNumberOfDaysInMonth(year, month) {
+const getNumberOfDaysInMonth = (year, month) => {
     return dayjs(`${year}-${month}-01`).daysInMonth();
 }
 
-function createDaysForCurrentMonth(year, month) {
+const createDaysForCurrentMonth = (year, month) => {
     return [...Array(getNumberOfDaysInMonth(year, month))].map((day, index) => {
         return {
             date: dayjs(`${year}-${month}-${index + 1}`).format("YYYY-MM-DD"),
@@ -115,7 +114,7 @@ function createDaysForCurrentMonth(year, month) {
     });
 }
 
-function createDaysForPreviousMonth(year, month) {
+const createDaysForPreviousMonth = (year, month) => {
     const firstDayOfTheMonthWeekday = getWeekday(currentMonthDays[0].date);
 
     const previousMonth = dayjs(`${year}-${month}-01`).subtract(1, "month");
@@ -142,7 +141,7 @@ function createDaysForPreviousMonth(year, month) {
     });
 }
 
-function createDaysForNextMonth(year, month) {
+const createDaysForNextMonth = (year, month) => {
     const lastDayOfTheMonthWeekday = getWeekday(
         `${year}-${month}-${currentMonthDays.length}`
     );
@@ -150,7 +149,7 @@ function createDaysForNextMonth(year, month) {
     const nextMonth = dayjs(`${year}-${month}-01`).add(1, "month");
 
     const visibleNumberOfDaysFromNextMonth = lastDayOfTheMonthWeekday ?
-        7 - lastDayOfTheMonthWeekday :
+        8 - lastDayOfTheMonthWeekday :
         lastDayOfTheMonthWeekday;
 
     return [...Array(visibleNumberOfDaysFromNextMonth)].map((day, index) => {
@@ -164,11 +163,11 @@ function createDaysForNextMonth(year, month) {
     });
 }
 
-function getWeekday(date) {
+const getWeekday = (date) => {
     return new Date(date).getDay();
 }
 
-function initMonthSelectors() {
+const initMonthSelectors = () => {
     document
         .getElementById("previous-month-selector")
         .addEventListener("click", function () {
@@ -193,7 +192,8 @@ function initMonthSelectors() {
 
 
 
-
+createCalendar();
+initMonthSelectors();
 
 
 
@@ -201,11 +201,3 @@ document.getElementById("profileCard").addEventListener("click", () => {
     window.location = "account/settings";
 })
 
-
-
-
-// !function(e,t)
-// {"object"==typeof exports&&
-// "undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):e.dayjs_plugin_weekday=t()}
-// (this,function(){"use strict";return function(e,t)
-// {}});
