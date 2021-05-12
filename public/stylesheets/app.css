@@ -9,7 +9,7 @@ body {
     margin:0;
     padding:0;
     display:grid;
-    grid-template-columns: 10rem auto;
+    grid-template-columns: 12rem auto;
     grid-template-rows: 3.5rem 7rem auto;
     grid-template-areas: "topbar  topbar"
                          "leftbar headers"
@@ -66,7 +66,12 @@ body {
 .left-bar {
     grid-area: leftbar;
     background-color: var(--color-brown-medium);
+    color: var(--color-light);
+    padding: 0 0.25rem;
+}
 
+.left-bar h2 {
+    font-size: 1.4rem;
 }
 
 .headers-container {

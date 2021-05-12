@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../stylesheets/app.css" />
 
     <script defer src="../scripts/data.js"></script>
+    <script defer src="../scripts/app.js"></script>
     
     <title>Waffle! - Calendar</title>
 </head>
@@ -18,8 +19,8 @@
     <div class="main-grid">
         <div class="top-bar">
             <div>
-                <a class="settings-link"><img class="settings-icon" src="../images/cog.svg"/></a>
-                <div class="profile">
+                <a class="settings-link" href="settings"><img class="settings-icon" src="../images/cog.svg"/></a>
+                <div class="profile" id="profileCard">
                     <div class="img-circle">
                         <img class="img" id="profileImg" src="https://via.placeholder.com/150" />
                     </div>
