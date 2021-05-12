@@ -23,6 +23,7 @@ const updateCalendarListDisplay = () => {
 const createCalendarItem = calendar => {
     let calendarItem = document.createElement("div");
     calendarItem.classList.add("calendar-item");
+    if(!calendar.visible) calendarItem.classList.add("disabled");
     calendarItem.id = calendar.id;
 
     let calendarName = document.createElement("p");
@@ -37,10 +38,21 @@ const createCalendarItem = calendar => {
     let btnGroup = document.createElement("div");
     btnGroup.classList.add("btn-group");
 
+    let visibilityBtn = document.createElement("span");
+    visibilityBtn.classList.add("visibility");
+    visibilityBtn.classList.add("icon-btn");
+    //Image came from https://fontawesome.com/icons. Color has been modified.
+    visibilityBtn.innerHTML = `<img src=${calendar.visible ? "../images/eye-solid.svg" : "../images/eye-slash-solid.svg" } />`;
+    visibilityBtn.addEventListener("click", () => {
+        toggleVisibility(calendar.id);
+    });
+    btnGroup.appendChild(visibilityBtn);
+
+
     let editBtn = document.createElement("span");
     editBtn.classList.add("accept");
     editBtn.classList.add("icon-btn");
-    //Image came from https://fontawesome.com/icons/pencil-alt. Color has been modified.
+    //Image came from https://fontawesome.com/icons. Color has been modified.
     editBtn.innerHTML = `<img src="../images/pencil-alt-solid.svg" />`;
     editBtn.addEventListener("click", () => {
         if(document.getElementById(calendar.id).dataset.editMode === "true") exitEditMode();
@@ -62,7 +74,26 @@ const createCalendarItem = calendar => {
     return calendarItem;
 }
 
-const removeCalendar = (id) => {
+const toggleVisibility = id => {
+    let visibility;
+    userCalendarList = userCalendarList.map( object => {
+        if(object.id == id) {
+            let newObject = {
+                id: object.id,
+                name: object.name,
+                ics: object.ics
+            }
+            visibility = !object.visible;
+            newObject.visible = visibility;
+            return newObject;
+        } 
+        return object;
+    });
+    document.getElementById(id).getElementsByClassName("visibility")[0].childNodes[0].src = visibility ? "../images/eye-solid.svg" : "../images/eye-slash-solid.svg";
+    document.getElementById(id).classList.toggle("disabled");
+}
+
+const removeCalendar = id => {
     //remove element from HTML
     document.getElementById(id).remove();
     //remove from global list
@@ -74,7 +105,8 @@ const addCalendar = (name, ics) => {
    let newCalendar = {
         id: `replace${newId++}`,
         name,
-        ics
+        ics,
+        visible: true
    }
    if(userCalendarList.length == 0) document.getElementById("calendarList").innerHTML = "";
    document.getElementById("calendarList").appendChild(createCalendarItem(newCalendar));
@@ -134,12 +166,13 @@ const exitEditMode = () => {
                     let newObject = {
                         id: object.id,
                         name: nameText,
-                        ics: icsText
+                        ics: icsText,
+                        visible: object.visible
                     }
                     return newObject;
                 } 
                 return object;
-            })
+            });
         }
     });
 
