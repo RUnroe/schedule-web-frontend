@@ -1,0 +1,90 @@
+body {
+    background-color: var(--color-brown-medium);
+}
+
+.main-grid {
+    width:100%;
+    height:100%;
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+    display:grid;
+    grid-template-columns: 10rem auto;
+    grid-template-rows: 3.5rem 7rem auto;
+    grid-template-areas: "topbar  topbar"
+                         "leftbar headers"
+                         "leftbar calendar";
+}
+.top-bar {
+    grid-area: topbar;
+    background-color: var(--color-brown-medium);
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.top-bar > div {
+    display:flex;
+    flex-direction: row;
+}
+
+.profile {
+    background-color: var(--color-light);
+    border-radius: 5px;
+    padding:0 0.5rem;
+    min-width: 100px;
+    height: 80%;
+    margin: auto 0 auto 4rem;
+    display:flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    align-items: center;
+    cursor: pointer;
+}
+
+.profile > .img-circle {
+    width:2rem;
+    height:2rem;
+}
+.profile > p {
+    margin:0 0.5rem;
+}
+
+#calendarViewModeSelect {
+    height: 80%;
+    margin: auto 0.5rem;
+    padding:0 0.5rem;
+    background-color: var(--color-light);
+    outline:none;
+    border:none;
+    border-radius: 5px;
+    color: var(--color-brown-dark);
+    font-family: 'Reem Kufi', sans-serif;
+    
+}
+
+
+.left-bar {
+    grid-area: leftbar;
+    background-color: var(--color-brown-medium);
+
+}
+
+.headers-container {
+    grid-area: headers;
+    background-color: var(--color-tan);
+    border-top-left-radius: 15px;
+
+}
+
+.calendar-view {
+    grid-area: calendar;
+    background-color: var(--color-brown-medium);
+}
+
+
+
+.settings-icon {
+    width:1.8rem;
+    margin:0.5rem;
+    cursor: pointer;
+}
