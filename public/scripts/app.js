@@ -1,52 +1,68 @@
-document.getElementById("calendarView").innerHTML = `
-<div class="calendar-month">
-  <section class="calendar-month-header">
-    <div
-      id="selected-month"
-      class="calendar-month-header-selected-month"
-    ></div>
-    <section class="calendar-month-header-selectors">
-      <span id="previous-month-selector"><</span>
-      <span id="present-month-selector">Today</span>
-      <span id="next-month-selector">></span>
-    </section>
-  </section>
-
-  <ol
-    id="days-of-week"
-    class="day-of-week"
-  /></ol>
-
-  <ol
-    id="calendar-days"
-    class="days-grid"
-  >
-  </ol>
-</div>
-`;
-
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const TODAY = dayjs().format("YYYY-MM-DD");
 
 const INITIAL_YEAR = dayjs().format("YYYY");
 const INITIAL_MONTH = dayjs().format("M");
 
+
+let friendsList = [];
+//array of user ids
+let activeCalendars = [];
+
+/* #region   */
+
 let selectedMonth = dayjs(new Date(INITIAL_YEAR, INITIAL_MONTH - 1, 1));
 let currentMonthDays;
 let previousMonthDays;
 let nextMonthDays;
 
-const daysOfWeekElement = document.getElementById("days-of-week");
+const showMonthView = () => {
+    document.getElementById("calendarView").innerHTML = `
+    <div class="calendar-month">
+    <section class="calendar-month-header">
+        <div
+        id="selected-month"
+        class="calendar-month-header-selected-month"
+        ></div>
+        <section class="calendar-month-header-selectors">
+        <span id="previous-month-selector"><</span>
+        <span id="present-month-selector">Today</span>
+        <span id="next-month-selector">></span>
+        </section>
+    </section>
 
-WEEKDAYS.forEach((weekday) => {
-    const weekDayElement = document.createElement("li");
-    daysOfWeekElement.appendChild(weekDayElement);
-    weekDayElement.innerText = weekday;
-});
+    <ol
+        id="days-of-week"
+        class="day-of-week"
+    /></ol>
+
+    <ol
+        id="calendar-days"
+        class="days-grid"
+    >
+    </ol>
+    </div>
+    `;
+    WEEKDAYS.forEach((weekday) => {
+        const weekDayElement = document.createElement("li");
+        document.getElementById("days-of-week").appendChild(weekDayElement);
+        weekDayElement.innerText = weekday;
+    });
+
+    createMonthCalendar();
+    initMonthSelectors();
+
+
+    addMonthEvent(1, {
+        "start": "2021-05-28T16:23-07:00" // can pass this directly into `new Date(...)`
+      , "end"  : "2021-05-28T19:14-07:00"
+      });
+};
 
 
 
-const createCalendar = (year = INITIAL_YEAR, month = INITIAL_MONTH) => {
+
+const createMonthCalendar = (year = INITIAL_YEAR, month = INITIAL_MONTH) => {
     const calendarDaysElement = document.getElementById("calendar-days");
 
     document.getElementById("selected-month").innerText = dayjs(
@@ -77,9 +93,15 @@ const appendDay = (day, calendarDaysElement) => {
     dayElement.id = day.date;
     const dayElementClassList = dayElement.classList;
     dayElementClassList.add("calendar-day");
+
     const dayOfMonthElement = document.createElement("span");
     dayOfMonthElement.innerText = day.dayOfMonth;
     dayElement.appendChild(dayOfMonthElement);
+
+    const eventsList = document.createElement("div");
+    eventsList.classList.add("eventsList");
+    dayElement.appendChild(eventsList);
+
     calendarDaysElement.appendChild(dayElement);
 
     if (!day.isCurrentMonth) {
@@ -121,8 +143,7 @@ const createDaysForPreviousMonth = (year, month) => {
 
     // Cover first day of the month being sunday (firstDayOfTheMonthWeekday === 0)
     const visibleNumberOfDaysFromPreviousMonth = firstDayOfTheMonthWeekday ?
-        firstDayOfTheMonthWeekday - 1 :
-        6;
+        firstDayOfTheMonthWeekday - 1 : 6;
 
     const previousMonthLastMondayDayOfMonth = dayjs(currentMonthDays[0].date)
         .subtract(visibleNumberOfDaysFromPreviousMonth, "day")
@@ -163,32 +184,58 @@ const createDaysForNextMonth = (year, month) => {
     });
 }
 
-const getWeekday = (date) => {
-    return new Date(date).getDay();
-}
+
 
 const initMonthSelectors = () => {
     document.getElementById("previous-month-selector").addEventListener("click", () => {
         selectedMonth = dayjs(selectedMonth).subtract(1, "month");
-        createCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+        createMonthCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
     });
 
     document.getElementById("present-month-selector").addEventListener("click", () => {
         selectedMonth = dayjs(new Date(INITIAL_YEAR, INITIAL_MONTH - 1, 1));
-        createCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+        createMonthCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
     });
 
     document.getElementById("next-month-selector").addEventListener("click", () => {
         selectedMonth = dayjs(selectedMonth).add(1, "month");
-        createCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+        createMonthCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
     });
 }
 
+const addMonthEvent = (userId, event) => {
+    const eventDiv = document.createElement("div");
+    eventDiv.dataset.owner = userId;
+    eventDiv.dataset.time = Date.parse(event.start);
+    eventDiv.classList.add("month-event");
+    eventDiv.classList.add(activeCalendars.indexOf(userId));
+    eventDiv.innerHTML = `${formatTime(event.start)} - <em>${getName(userId)}</em>`;
 
+    const date = new Date(event.start).toISOString().split("T")[0];
+    if(document.getElementById(date)) {
+        let eventContainer = document.getElementById(date).getElementsByClassName("eventsList")[0];
+        eventContainer.append(eventDiv);
+    }
+}
+/* #endregion */
 
-createCalendar();
-initMonthSelectors();
+const formatTime = time => {
+    let startTime = new Date(time).toLocaleTimeString("en-US");
+    let startTimeArr = startTime.split(":");
+    let ampm = startTimeArr[2].split(" ");
+    return `${startTimeArr[0]}:${startTimeArr[1]} ${ampm[1]}`;
+}
 
+const getName = id => {
+    if(friendsList[id]) return friendsList[id].name;
+    return "Cannot find friend";
+}
+
+const getWeekday = date => {
+    return new Date(date).getDay();
+}
+
+showMonthView();
 
 
 document.getElementById("profileCard").addEventListener("click", () => {
@@ -199,4 +246,3 @@ document.getElementById("profileCard").addEventListener("click", () => {
 document.getElementById("friendsPageBtn").addEventListener("click", () => {
     window.location = "friends";
 });
-

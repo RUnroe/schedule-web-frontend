@@ -114,11 +114,30 @@ body {
     display: none;
 }
 
+.eventsList {
+    margin-top: 25px;
+    box-sizing: border-box;
+}
 
 .settings-icon {
     width: 1.8rem;
     margin: 0.5rem;
     cursor: pointer;
+}
+
+
+.month-event {
+    box-sizing: border-box;
+    margin:2px 0;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding:3px;
+    width:100%;
+    border-radius: 3px;
+    color:var(--color-brown-dark);
+    background-color: var(--color-user-1);
 }
 
 
@@ -192,6 +211,7 @@ ol, li {
     padding: 5px;
     border-top: 1px solid var(--color-brown-medium);
     border-left: 1px solid var(--color-brown-medium);
+    overflow: hidden;
 }
 
 .calendar-day > span {
