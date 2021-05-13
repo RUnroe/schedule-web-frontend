@@ -168,26 +168,20 @@ const getWeekday = (date) => {
 }
 
 const initMonthSelectors = () => {
-    document
-        .getElementById("previous-month-selector")
-        .addEventListener("click", function () {
-            selectedMonth = dayjs(selectedMonth).subtract(1, "month");
-            createCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
-        });
+    document.getElementById("previous-month-selector").addEventListener("click", () => {
+        selectedMonth = dayjs(selectedMonth).subtract(1, "month");
+        createCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+    });
 
-    document
-        .getElementById("present-month-selector")
-        .addEventListener("click", function () {
-            selectedMonth = dayjs(new Date(INITIAL_YEAR, INITIAL_MONTH - 1, 1));
-            createCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
-        });
+    document.getElementById("present-month-selector").addEventListener("click", () => {
+        selectedMonth = dayjs(new Date(INITIAL_YEAR, INITIAL_MONTH - 1, 1));
+        createCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+    });
 
-    document
-        .getElementById("next-month-selector")
-        .addEventListener("click", function () {
-            selectedMonth = dayjs(selectedMonth).add(1, "month");
-            createCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
-        });
+    document.getElementById("next-month-selector").addEventListener("click", () => {
+        selectedMonth = dayjs(selectedMonth).add(1, "month");
+        createCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+    });
 }
 
 
@@ -199,5 +193,10 @@ initMonthSelectors();
 
 document.getElementById("profileCard").addEventListener("click", () => {
     window.location = "account/settings";
-})
+});
+
+
+document.getElementById("friendsPageBtn").addEventListener("click", () => {
+    window.location = "friends";
+});
 
