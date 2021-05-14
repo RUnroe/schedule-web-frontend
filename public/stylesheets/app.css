@@ -129,7 +129,7 @@ body {
 .month-event {
     box-sizing: border-box;
     margin:2px 0;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -140,6 +140,18 @@ body {
     background-color: var(--color-user-1);
 }
 
+.month-event.color-0 {
+    background-color: var(--color-user-2);
+}
+.month-event.color-1 {
+    background-color: var(--color-user-3);
+}
+.month-event.color-2 {
+    background-color: var(--color-user-4);
+}
+.month-event.color-3 {
+    background-color: var(--color-user-5);
+}
 
 ol, li {
     padding: 0;

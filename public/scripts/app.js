@@ -4,10 +4,60 @@ const TODAY = dayjs().format("YYYY-MM-DD");
 const INITIAL_YEAR = dayjs().format("YYYY");
 const INITIAL_MONTH = dayjs().format("M");
 
+//List of friends : ids and names
+let friendsList = [
+      { "id": "18162393822390029", "name": "Joe Mama" , "icon": "18162838739488302" }
+    , { "id": "18162393822390030", "name": "Joe Manga", "icon": "18162833478388302" }
+    , { "id": "18162393822390031", "name": "Banjoe Ma", "icon": "18162833434328302" }
+    , { "id": "18162393822390032", "name": "fu Ma", "icon": "18162833434328302" }
+];
 
-let friendsList = [];
+//Object of calendars. if calendar is not listed in here, fetch it
+let allCalendars = {
+    "18162393822390029": [
+        {
+          "start": "2021-05-28T16:23-07:00" // can pass this directly into `new Date(...)`
+        , "end"  : "2021-05-28T19:14-07:00"
+        }
+        , {
+          "start": "2021-05-03T12:28-07:00"
+        , "end"  : "2021-05-03T16:19-07:00"
+        }
+      ],
+    "18162393822390030": [
+        {
+          "start": "2021-05-29T16:23-07:00" // can pass this directly into `new Date(...)`
+        , "end"  : "2021-05-29T19:14-07:00"
+        }
+        , {
+          "start": "2021-05-04T12:28-07:00"
+        , "end"  : "2021-05-04T16:19-07:00"
+        }
+      ],
+    "18162393822390031": [
+        {
+          "start": "2021-05-26T16:23-07:00" // can pass this directly into `new Date(...)`
+        , "end"  : "2021-05-26T19:14-07:00"
+        }
+        , {
+          "start": "2021-05-02T12:28-07:00"
+        , "end"  : "2021-05-02T16:19-07:00"
+        }
+      ],
+      "18162393822390032": [
+        {
+          "start": "2021-05-26T16:23-07:00" // can pass this directly into `new Date(...)`
+        , "end"  : "2021-05-26T19:14-07:00"
+        }
+        , {
+          "start": "2021-05-02T14:28-07:00"
+        , "end"  : "2021-05-02T16:19-07:00"
+        }
+      ],
+};
+
 //array of user ids
-let activeCalendars = [];
+let activeCalendars = ["18162393822390029", "18162393822390031", "18162393822390030", "18162393822390032"];
 
 /* #region   */
 
@@ -53,10 +103,7 @@ const showMonthView = () => {
     initMonthSelectors();
 
 
-    addMonthEvent(1, {
-        "start": "2021-05-28T16:23-07:00" // can pass this directly into `new Date(...)`
-      , "end"  : "2021-05-28T19:14-07:00"
-      });
+    showMonthEvents(selectedMonth.format("YYYY"), selectedMonth.format("M"));
 };
 
 
@@ -208,14 +255,28 @@ const addMonthEvent = (userId, event) => {
     eventDiv.dataset.owner = userId;
     eventDiv.dataset.time = Date.parse(event.start);
     eventDiv.classList.add("month-event");
-    eventDiv.classList.add(activeCalendars.indexOf(userId));
-    eventDiv.innerHTML = `${formatTime(event.start)} - <em>${getName(userId)}</em>`;
+    eventDiv.classList.add("color-"+activeCalendars.indexOf(userId));
+    eventDiv.innerHTML = `${formatTime(event.start)} <b>${getName(userId)}</b>`;
 
     const date = new Date(event.start).toISOString().split("T")[0];
     if(document.getElementById(date)) {
         let eventContainer = document.getElementById(date).getElementsByClassName("eventsList")[0];
         eventContainer.append(eventDiv);
     }
+}
+
+const showMonthEvents = (year, month) => {
+
+
+    activeCalendars.forEach(id => {
+        allCalendars[id].forEach(event => {
+            let evtStartDate = new Date(event.start);
+            if((evtStartDate.getMonth()+1) == month && evtStartDate.getFullYear() == year) {
+                addMonthEvent(id, event);
+            }
+        })
+    });
+    
 }
 /* #endregion */
 
@@ -227,8 +288,12 @@ const formatTime = time => {
 }
 
 const getName = id => {
-    if(friendsList[id]) return friendsList[id].name;
-    return "Cannot find friend";
+    let name = "Cannot find friend";
+    friendsList.forEach(friend => {
+        console.log(friend.id, id, friend.id == id);
+        if(friend.id == id) name = friend.name;
+    });
+    return name;
 }
 
 const getWeekday = date => {
