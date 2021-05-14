@@ -259,3 +259,15 @@ ol, li {
     background-color: var(--color-brown-medium);
     padding: 0.15rem;
 }
+
+
+
+@media all and (min-width: 1400px) {
+    .main-grid {
+        display: grid;
+        grid-template-columns: 15rem 1100px;
+    }
+    .calendar-view {
+        border-top-right-radius:15px;
+    }
+}

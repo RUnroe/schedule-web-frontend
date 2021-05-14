@@ -212,13 +212,12 @@ const createDaysForCurrentMonth = (year, month) => {
 
 const createDaysForPreviousMonth = (year, month) => {
     const firstDayOfTheMonthWeekday = getWeekday(currentMonthDays[0].date);
-    const previousMonth = dayjs(`${year}-${month}-01`).subtract(1, "month");
+    const previousMonth = dayjs(`${year}-${month.length == 1 ? `0${month}` : month}-01`).subtract(1, "month");
 
     // Cover first day of the month being sunday (firstDayOfTheMonthWeekday === 0)
     // const visibleNumberOfDaysFromPreviousMonth = firstDayOfTheMonthWeekday ?
     //     firstDayOfTheMonthWeekday - 1 : 6;
-        const visibleNumberOfDaysFromPreviousMonth = firstDayOfTheMonthWeekday != 6 ?
-        firstDayOfTheMonthWeekday + 1 : 0;
+        const visibleNumberOfDaysFromPreviousMonth = firstDayOfTheMonthWeekday;
 
     const previousMonthLastMondayDayOfMonth = dayjs(currentMonthDays[0].date)
         .subtract(visibleNumberOfDaysFromPreviousMonth, "day")
@@ -239,14 +238,13 @@ const createDaysForPreviousMonth = (year, month) => {
 
 const createDaysForNextMonth = (year, month) => {
     const lastDayOfTheMonthWeekday = getWeekday(
-        `${year}-${month}-${currentMonthDays.length}`
+        `${year}-${month.length == 1 ? `0${month}` : month}-${currentMonthDays.length}`
     );
+    console.log(lastDayOfTheMonthWeekday);
     const nextMonth = dayjs(`${year}-${month}-01`).add(1, "month");
 
-    const visibleNumberOfDaysFromNextMonth = lastDayOfTheMonthWeekday != 6 ?
-        6 - lastDayOfTheMonthWeekday :
-        lastDayOfTheMonthWeekday;
-
+    const visibleNumberOfDaysFromNextMonth = 6 - lastDayOfTheMonthWeekday;
+    console.log(visibleNumberOfDaysFromNextMonth);
     return [...Array(visibleNumberOfDaysFromNextMonth)].map((day, index) => {
         return {
             date: dayjs(
@@ -339,7 +337,9 @@ const getName = id => {
 }
 
 const getWeekday = date => {
-    return new Date(date).getDay();
+    console.log(`${date}`, new Date(`${date}T18:00:00+00:00`) );
+    return new Date(`${date}T18:00:00+00:00`).getUTCDay();
+    // return new Date(date).getDay();
 }
 
 showMonthView();
