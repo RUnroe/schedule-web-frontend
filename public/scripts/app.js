@@ -353,3 +353,7 @@ document.getElementById("profileCard").addEventListener("click", () => {
 document.getElementById("friendsPageBtn").addEventListener("click", () => {
     window.location = "friends";
 });
+
+document.getElementById("toggleMenuBtn").addEventListener("click", () => {
+    document.getElementById("leftMenu").classList.toggle("expanded");
+});
