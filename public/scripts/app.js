@@ -321,6 +321,15 @@ const showMonthEvents = (year, month) => {
 }
 /* #endregion */
 
+
+const showWeekView = () => {
+    document.getElementById("calendarView").innerHTML = `
+    <div></div>
+    `;
+}
+
+
+
 const formatTime = time => {
     let startTime = new Date(time).toLocaleTimeString("en-US");
     let startTimeArr = startTime.split(":");
@@ -342,13 +351,20 @@ const getWeekday = date => {
     // return new Date(date).getDay();
 }
 
+
+
+
+
 showMonthView();
 
+document.getElementById("calendarViewModeSelect").addEventListener("change", event => {
+    if(event.target.value == "week") showWeekView();
+    else showMonthView(); 
+});
 
 document.getElementById("profileCard").addEventListener("click", () => {
     window.location = "account/settings";
 });
-
 
 document.getElementById("friendsPageBtn").addEventListener("click", () => {
     window.location = "friends";
