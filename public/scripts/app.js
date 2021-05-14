@@ -198,7 +198,6 @@ const createDaysForCurrentMonth = (year, month) => {
 
 const createDaysForPreviousMonth = (year, month) => {
     const firstDayOfTheMonthWeekday = getWeekday(currentMonthDays[0].date);
-    console.log(firstDayOfTheMonthWeekday);
     const previousMonth = dayjs(`${year}-${month}-01`).subtract(1, "month");
 
     // Cover first day of the month being sunday (firstDayOfTheMonthWeekday === 0)
@@ -228,10 +227,10 @@ const createDaysForNextMonth = (year, month) => {
     const lastDayOfTheMonthWeekday = getWeekday(
         `${year}-${month}-${currentMonthDays.length}`
     );
-
+console.log(lastDayOfTheMonthWeekday);
     const nextMonth = dayjs(`${year}-${month}-01`).add(1, "month");
 
-    const visibleNumberOfDaysFromNextMonth = lastDayOfTheMonthWeekday ?
+    const visibleNumberOfDaysFromNextMonth = lastDayOfTheMonthWeekday != 6 ?
         6 - lastDayOfTheMonthWeekday :
         lastDayOfTheMonthWeekday;
 
