@@ -26,6 +26,14 @@ let allCalendars = {
           "start": "2021-05-02T12:28-07:00"
         , "end"  : "2021-05-02T16:19-07:00"
         }
+        , {
+            "start": "2021-04-02T12:28-07:00"
+          , "end"  : "2021-04-02T16:19-07:00"
+          }
+        , {
+            "start": "2021-04-02T12:28-07:00"
+        ,   "end"  : "2021-04-02T16:19-07:00"
+        }
       ],
     "18162393822390029": [
         {
@@ -256,16 +264,19 @@ const initMonthSelectors = () => {
     document.getElementById("previous-month-selector").addEventListener("click", () => {
         selectedMonth = dayjs(selectedMonth).subtract(1, "month");
         createMonthCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+        showMonthEvents(selectedMonth.format("YYYY"), selectedMonth.format("M"));
     });
 
     document.getElementById("present-month-selector").addEventListener("click", () => {
         selectedMonth = dayjs(new Date(INITIAL_YEAR, INITIAL_MONTH - 1, 1));
         createMonthCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+        showMonthEvents(selectedMonth.format("YYYY"), selectedMonth.format("M"));
     });
 
     document.getElementById("next-month-selector").addEventListener("click", () => {
         selectedMonth = dayjs(selectedMonth).add(1, "month");
         createMonthCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+        showMonthEvents(selectedMonth.format("YYYY"), selectedMonth.format("M"));
     });
 }
 
