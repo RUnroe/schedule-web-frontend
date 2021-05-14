@@ -23,8 +23,8 @@ let allCalendars = {
         , "end"  : "2021-05-28T19:14-07:00"
         }
         , {
-          "start": "2021-05-03T12:28-07:00"
-        , "end"  : "2021-05-03T16:19-07:00"
+          "start": "2021-05-02T12:28-07:00"
+        , "end"  : "2021-05-02T16:19-07:00"
         }
       ],
     "18162393822390029": [
@@ -162,6 +162,12 @@ const appendDay = (day, calendarDaysElement) => {
     eventsList.classList.add("eventsList");
     dayElement.appendChild(eventsList);
 
+    const eventCount = document.createElement("div");
+    eventCount.classList.add("event-count");
+    eventCount.classList.add("hidden");
+    eventCount.innerHTML = "+0";
+    dayElement.appendChild(eventCount);
+
     calendarDaysElement.appendChild(dayElement);
 
     if (!day.isCurrentMonth) {
@@ -227,7 +233,6 @@ const createDaysForNextMonth = (year, month) => {
     const lastDayOfTheMonthWeekday = getWeekday(
         `${year}-${month}-${currentMonthDays.length}`
     );
-console.log(lastDayOfTheMonthWeekday);
     const nextMonth = dayjs(`${year}-${month}-01`).add(1, "month");
 
     const visibleNumberOfDaysFromNextMonth = lastDayOfTheMonthWeekday != 6 ?
@@ -265,17 +270,25 @@ const initMonthSelectors = () => {
 }
 
 const addMonthEvent = (userId, event) => {
-    const eventDiv = document.createElement("div");
-    eventDiv.dataset.owner = userId;
-    eventDiv.dataset.time = Date.parse(event.start);
-    eventDiv.classList.add("month-event");
-    eventDiv.classList.add("color-"+activeCalendars.indexOf(userId));
-    eventDiv.innerHTML = `${formatTime(event.start)} <b>${getName(userId)}</b>`;
-
     const date = new Date(event.start).toISOString().split("T")[0];
-    if(document.getElementById(date)) {
-        let eventContainer = document.getElementById(date).getElementsByClassName("eventsList")[0];
-        eventContainer.append(eventDiv);
+    const eventContainer = document.getElementById(date).getElementsByClassName("eventsList")[0];
+    if(eventContainer.childElementCount >= 2) {
+        const countDiv = document.getElementById(date).getElementsByClassName("event-count")[0];
+        countDiv.classList.remove("hidden");
+        countDiv.innerHTML = `+${parseInt(countDiv.innerHTML.split("+")[1]) +1}`;
+    }
+    else {
+        const eventDiv = document.createElement("div");
+        eventDiv.dataset.owner = userId;
+        eventDiv.dataset.time = Date.parse(event.start);
+        eventDiv.classList.add("month-event");
+        eventDiv.classList.add("color-"+activeCalendars.indexOf(userId));
+        eventDiv.innerHTML = `<b>${getName(userId)}</b>`;
+
+        
+        if(document.getElementById(date)) {
+            eventContainer.append(eventDiv);
+        }
     }
 }
 

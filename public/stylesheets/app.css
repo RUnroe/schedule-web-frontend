@@ -116,6 +116,7 @@ body {
 
 .eventsList {
     margin-top: 25px;
+    padding: 3px;
     box-sizing: border-box;
 }
 
@@ -151,6 +152,13 @@ body {
 }
 .month-event.color-3 {
     background-color: var(--color-user-5);
+}
+
+
+.event-count {
+    width:100%;
+    text-align: center;
+    background-color: var(--color-tan);
 }
 
 ol, li {
@@ -220,7 +228,6 @@ ol, li {
     font-size: 16px;
     background-color: var(--color-light);
     color: var(--color-brown-dark);
-    padding: 5px;
     border-top: 1px solid var(--color-brown-medium);
     border-left: 1px solid var(--color-brown-medium);
     overflow: hidden;
@@ -231,7 +238,8 @@ ol, li {
     justify-content: center;
     align-items: center;
     position: absolute;
-    right: 2px;
+    top: 2px;
+    right: 1px;
     width: 20px;
     height: 20px;
 }
