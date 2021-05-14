@@ -1,8 +1,11 @@
-const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const TODAY = dayjs().format("YYYY-MM-DD");
 
 const INITIAL_YEAR = dayjs().format("YYYY");
 const INITIAL_MONTH = dayjs().format("M");
+
+//get from backend
+let currentUserId = "18162393822390028";
 
 //List of friends : ids and names
 let friendsList = [
@@ -14,6 +17,16 @@ let friendsList = [
 
 //Object of calendars. if calendar is not listed in here, fetch it
 let allCalendars = {
+    "18162393822390028": [
+        {
+          "start": "2021-05-28T16:23-07:00" // can pass this directly into `new Date(...)`
+        , "end"  : "2021-05-28T19:14-07:00"
+        }
+        , {
+          "start": "2021-05-03T12:28-07:00"
+        , "end"  : "2021-05-03T16:19-07:00"
+        }
+      ],
     "18162393822390029": [
         {
           "start": "2021-05-28T16:23-07:00" // can pass this directly into `new Date(...)`
@@ -185,12 +198,14 @@ const createDaysForCurrentMonth = (year, month) => {
 
 const createDaysForPreviousMonth = (year, month) => {
     const firstDayOfTheMonthWeekday = getWeekday(currentMonthDays[0].date);
-
+    console.log(firstDayOfTheMonthWeekday);
     const previousMonth = dayjs(`${year}-${month}-01`).subtract(1, "month");
 
     // Cover first day of the month being sunday (firstDayOfTheMonthWeekday === 0)
-    const visibleNumberOfDaysFromPreviousMonth = firstDayOfTheMonthWeekday ?
-        firstDayOfTheMonthWeekday - 1 : 6;
+    // const visibleNumberOfDaysFromPreviousMonth = firstDayOfTheMonthWeekday ?
+    //     firstDayOfTheMonthWeekday - 1 : 6;
+        const visibleNumberOfDaysFromPreviousMonth = firstDayOfTheMonthWeekday != 6 ?
+        firstDayOfTheMonthWeekday + 1 : 0;
 
     const previousMonthLastMondayDayOfMonth = dayjs(currentMonthDays[0].date)
         .subtract(visibleNumberOfDaysFromPreviousMonth, "day")
@@ -217,7 +232,7 @@ const createDaysForNextMonth = (year, month) => {
     const nextMonth = dayjs(`${year}-${month}-01`).add(1, "month");
 
     const visibleNumberOfDaysFromNextMonth = lastDayOfTheMonthWeekday ?
-        8 - lastDayOfTheMonthWeekday :
+        6 - lastDayOfTheMonthWeekday :
         lastDayOfTheMonthWeekday;
 
     return [...Array(visibleNumberOfDaysFromNextMonth)].map((day, index) => {
@@ -266,7 +281,12 @@ const addMonthEvent = (userId, event) => {
 }
 
 const showMonthEvents = (year, month) => {
-
+    allCalendars[currentUserId].forEach(event => {
+        let evtStartDate = new Date(event.start);
+        if((evtStartDate.getMonth()+1) == month && evtStartDate.getFullYear() == year) {
+            addMonthEvent(currentUserId, event);
+        }
+    });
 
     activeCalendars.forEach(id => {
         allCalendars[id].forEach(event => {
@@ -274,7 +294,7 @@ const showMonthEvents = (year, month) => {
             if((evtStartDate.getMonth()+1) == month && evtStartDate.getFullYear() == year) {
                 addMonthEvent(id, event);
             }
-        })
+        });
     });
     
 }
@@ -288,9 +308,8 @@ const formatTime = time => {
 }
 
 const getName = id => {
-    let name = "Cannot find friend";
+    let name = "You";
     friendsList.forEach(friend => {
-        console.log(friend.id, id, friend.id == id);
         if(friend.id == id) name = friend.name;
     });
     return name;
