@@ -13,6 +13,7 @@ let friendsList = [
   , { "id": "18162393822390030", "name": "Joe Manga", "icon": "18162833478388302" }
   , { "id": "18162393822390031", "name": "Banjoe Ma", "icon": "18162833434328302" }
   , { "id": "18162393822390032", "name": "fu Ma", "icon": "18162833434328302" }
+  , { "id": "1816239382239", "name": "Ma", "icon": "18162833434328302" }
 ];
 
 //Object of calendars. if calendar is not listed in here, fetch it
@@ -33,6 +34,16 @@ let allCalendars = {
         , {
             "start": "2021-04-02T12:28-07:00"
         ,   "end"  : "2021-04-02T16:19-07:00"
+        }
+      ],
+      "1816239382239": [
+        {
+          "start": "2021-05-28T16:23-07:00" // can pass this directly into `new Date(...)`
+        , "end"  : "2021-05-28T19:14-07:00"
+        }
+        , {
+          "start": "2021-05-03T12:28-07:00"
+        , "end"  : "2021-05-03T16:19-07:00"
         }
       ],
     "18162393822390029": [
@@ -406,6 +417,12 @@ const toggleActiveCalendar = id => {
     }
     else {
         activeCalendars.push(id);
+        if(activeCalendars.length > 4) {
+            for(let i = 4; i < activeCalendars.length; i++) {
+                document.getElementById(activeCalendars[0]).checked = false;
+                activeCalendars.shift();
+            }
+        }
 
     }
     showMonthEvents(selectedMonth.format("YYYY"), selectedMonth.format("M"));
