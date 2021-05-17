@@ -143,16 +143,20 @@ body {
     background-color: var(--color-user-1);
 }
 
-.month-event.color-0 {
+.color-0 {
+    color: var(--color-brown-dark);
     background-color: var(--color-user-2);
 }
-.month-event.color-1 {
+.color-1 {
+    color: var(--color-brown-dark);
     background-color: var(--color-user-3);
 }
-.month-event.color-2 {
+.color-2 {
+    color: var(--color-brown-dark);
     background-color: var(--color-user-4);
 }
-.month-event.color-3 {
+.color-3 {
+    color: var(--color-brown-dark);
     background-color: var(--color-user-5);
 }
 
@@ -282,7 +286,25 @@ ol, li {
     background-color: var(--color-light);
 }
 
-
+.friend-item {
+    margin:0.25rem;
+    cursor: pointer;
+    border-radius: 3px;
+    padding:0.15rem;
+}
+.friend-item > label {
+    margin-left: 0.25rem;
+}
+#friendCalendarList {
+    overflow-x: hidden;
+    max-height:350px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+#friendCalendarList::-webkit-scrollbar {
+    display: none;
+}
 
 @media all and (min-width: 1400px) {
     .main-grid {

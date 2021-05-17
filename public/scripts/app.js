@@ -283,6 +283,10 @@ const addMonthEvent = (userId, event) => {
     const eventContainer = document.getElementById(date).getElementsByClassName("eventsList")[0];
     eventContainer.dataset.count = (parseInt(eventContainer.dataset.count) + 1) +"";
     const countDiv = document.getElementById(date).getElementsByClassName("event-count")[0];
+    
+
+    if(document.getElementById(userId)) document.getElementById(userId).parentNode.classList.add("color-"+activeCalendars.indexOf(userId));
+    
     if(eventContainer.childElementCount >= 2) {
         countDiv.classList.remove("hidden");
         countDiv.innerHTML = `+${parseInt(eventContainer.dataset.count) - 2}`;
@@ -295,6 +299,7 @@ const addMonthEvent = (userId, event) => {
         eventDiv.dataset.time = Date.parse(event.start);
         eventDiv.classList.add("month-event");
         eventDiv.classList.add("color-"+activeCalendars.indexOf(userId));
+
         eventDiv.innerHTML = `<b>${getName(userId)}</b>`;
 
         
@@ -312,6 +317,10 @@ const showMonthEvents = (year, month) => {
     //reset child count
     document.querySelectorAll(".eventsList").forEach(item => {
         item.dataset.count = 0;
+    });
+    //remove color from friend item
+    document.querySelectorAll(".friend-item").forEach(friendItem => {
+        friendItem.className = "friend-item";
     });
     allCalendars[currentUserId].forEach(event => {
         let evtStartDate = new Date(event.start);
@@ -397,6 +406,7 @@ const toggleActiveCalendar = id => {
     }
     else {
         activeCalendars.push(id);
+
     }
     showMonthEvents(selectedMonth.format("YYYY"), selectedMonth.format("M"));
 }
