@@ -9,10 +9,6 @@ let currentUserId = "18162393822390028";
 
 //List of friends : ids and names
 let friendsList = [
-      { "id": "18162393822390029", "name": "Joe Mama" , "icon": "18162838739488302" }
-    , { "id": "18162393822390030", "name": "Joe Manga", "icon": "18162833478388302" }
-    , { "id": "18162393822390031", "name": "Banjoe Ma", "icon": "18162833434328302" }
-    , { "id": "18162393822390032", "name": "fu Ma", "icon": "18162833434328302" }
 ];
 
 //Object of calendars. if calendar is not listed in here, fetch it
@@ -351,7 +347,41 @@ const getWeekday = date => {
     // return new Date(date).getDay();
 }
 
+const populateFriendsList = () => {
+    friendsList.forEach(friend => {
+        const friendItem = document.createElement("div");
+        friendItem.classList.add("friend-item");
 
+        const checkbox = document.createElement("input");
+        checkbox.id = friend.id;
+        checkbox.setAttribute("type", "checkbox");
+        friendItem.appendChild(checkbox);
+
+        const label = document.createElement("label");
+        label.innerHTML = friend.name;
+        label.setAttribute("for", friend.id);
+        friendItem.appendChild(label);
+
+        document.getElementById("friendCalendarList").appendChild(friendItem);
+    });
+}
+
+console.log(`${apiUrl}${apiVersion}/friends/current`);
+fetch(`${apiUrl}${apiVersion}/friends/current`, {
+    method: "GET", 
+    mode: "cors",
+    // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: credentials 
+})
+// fetch(`${apiUrl}${apiVersion}/friends/current`)
+.then(response => {
+    console.log(response);
+    return response.json();
+})
+.then(data => {
+    friendsList = data;
+    populateFriendsList();
+});
 
 
 

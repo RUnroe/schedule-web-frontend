@@ -4,7 +4,7 @@ let newId = 0;
 
 
 const getCalendarList = () => {
-    fetch(`${apiUrl}/api/${apiVersion}/friends`) //TODO: Update link
+    fetch(`${apiUrl}${apiVersion}/friends`) //TODO: Update link
     .then((response) => response.json())
     .then((data) => {
         userCalendarList = data;
