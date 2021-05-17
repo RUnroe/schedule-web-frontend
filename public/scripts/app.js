@@ -9,6 +9,10 @@ let currentUserId = "18162393822390028";
 
 //List of friends : ids and names
 let friendsList = [
+    { "id": "18162393822390029", "name": "Joe Mama" , "icon": "18162838739488302" }
+  , { "id": "18162393822390030", "name": "Joe Manga", "icon": "18162833478388302" }
+  , { "id": "18162393822390031", "name": "Banjoe Ma", "icon": "18162833434328302" }
+  , { "id": "18162393822390032", "name": "fu Ma", "icon": "18162833434328302" }
 ];
 
 //Object of calendars. if calendar is not listed in here, fetch it
@@ -74,8 +78,8 @@ let allCalendars = {
 };
 
 //array of user ids
-let activeCalendars = ["18162393822390029", "18162393822390031", "18162393822390030", "18162393822390032"];
-
+// let activeCalendars = ["18162393822390029", "18162393822390031", "18162393822390030", "18162393822390032"];
+let activeCalendars = [];
 /* #region   */
 
 let selectedMonth = dayjs(new Date(INITIAL_YEAR, INITIAL_MONTH - 1, 1));
@@ -277,12 +281,15 @@ const initMonthSelectors = () => {
 const addMonthEvent = (userId, event) => {
     const date = new Date(event.start).toISOString().split("T")[0];
     const eventContainer = document.getElementById(date).getElementsByClassName("eventsList")[0];
+    eventContainer.dataset.count = (parseInt(eventContainer.dataset.count) + 1) +"";
+    const countDiv = document.getElementById(date).getElementsByClassName("event-count")[0];
     if(eventContainer.childElementCount >= 2) {
-        const countDiv = document.getElementById(date).getElementsByClassName("event-count")[0];
         countDiv.classList.remove("hidden");
-        countDiv.innerHTML = `+${parseInt(countDiv.innerHTML.split("+")[1]) +1}`;
+        countDiv.innerHTML = `+${parseInt(eventContainer.dataset.count) - 2}`;
     }
     else {
+        countDiv.classList.add("hidden");
+
         const eventDiv = document.createElement("div");
         eventDiv.dataset.owner = userId;
         eventDiv.dataset.time = Date.parse(event.start);
@@ -298,6 +305,14 @@ const addMonthEvent = (userId, event) => {
 }
 
 const showMonthEvents = (year, month) => {
+    //remove all elements first
+    document.querySelectorAll(".month-event").forEach(item => {
+        item.remove();
+    });
+    //reset child count
+    document.querySelectorAll(".eventsList").forEach(item => {
+        item.dataset.count = 0;
+    });
     allCalendars[currentUserId].forEach(event => {
         let evtStartDate = new Date(event.start);
         if((evtStartDate.getMonth()+1) == month && evtStartDate.getFullYear() == year) {
@@ -348,6 +363,7 @@ const getWeekday = date => {
 }
 
 const populateFriendsList = () => {
+
     friendsList.forEach(friend => {
         const friendItem = document.createElement("div");
         friendItem.classList.add("friend-item");
@@ -355,6 +371,9 @@ const populateFriendsList = () => {
         const checkbox = document.createElement("input");
         checkbox.id = friend.id;
         checkbox.setAttribute("type", "checkbox");
+        checkbox.addEventListener("change", () => {
+            toggleActiveCalendar(checkbox.id);
+        });
         friendItem.appendChild(checkbox);
 
         const label = document.createElement("label");
@@ -365,6 +384,23 @@ const populateFriendsList = () => {
         document.getElementById("friendCalendarList").appendChild(friendItem);
     });
 }
+
+const toggleActiveCalendar = id => {
+    let calendarIsActive = false;
+    activeCalendars.forEach(calendarId => {
+        if(calendarId == id) {
+            calendarIsActive = true;
+        }
+    });
+    if(calendarIsActive) {
+        activeCalendars.splice(activeCalendars.indexOf(id), 1);
+    }
+    else {
+        activeCalendars.push(id);
+    }
+    showMonthEvents(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+}
+
 
 console.log(`${apiUrl}${apiVersion}/friends/current`);
 fetch(`${apiUrl}${apiVersion}/friends/current`, {
