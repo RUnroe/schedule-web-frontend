@@ -4,17 +4,13 @@ const TODAY = dayjs().format("YYYY-MM-DD");
 const INITIAL_YEAR = dayjs().format("YYYY");
 const INITIAL_MONTH = dayjs().format("M");
 
+let calendarViewMode = "month";
+
 //get from backend
 let currentUserId = "18162393822390028";
 
 //List of friends : ids and names
-let friendsList = [
-    { "id": "18162393822390029", "name": "Joe Mama" , "icon": "18162838739488302" }
-  , { "id": "18162393822390030", "name": "Joe Manga", "icon": "18162833478388302" }
-  , { "id": "18162393822390031", "name": "Banjoe Ma", "icon": "18162833434328302" }
-  , { "id": "18162393822390032", "name": "fu Ma", "icon": "18162833434328302" }
-  , { "id": "1816239382239", "name": "Ma", "icon": "18162833434328302" }
-];
+let friendsList = [];
 
 //Object of calendars. if calendar is not listed in here, fetch it
 let allCalendars = {
@@ -425,8 +421,9 @@ const toggleActiveCalendar = id => {
         }
 
     }
-    showMonthEvents(selectedMonth.format("YYYY"), selectedMonth.format("M"));
-}
+    if(calendarViewMode == "month") showMonthEvents(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+    else showWeekEvents();
+} 
 
 
 console.log(`${apiUrl}${apiVersion}/friends/current`);
@@ -436,7 +433,6 @@ fetch(`${apiUrl}${apiVersion}/friends/current`, {
     // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     credentials: credentials 
 })
-// fetch(`${apiUrl}${apiVersion}/friends/current`)
 .then(response => {
     console.log(response);
     return response.json();
@@ -451,8 +447,14 @@ fetch(`${apiUrl}${apiVersion}/friends/current`, {
 showMonthView();
 
 document.getElementById("calendarViewModeSelect").addEventListener("change", event => {
-    if(event.target.value == "week") showWeekView();
-    else showMonthView(); 
+    if(event.target.value == "week") {
+        calendarViewMode = "week";
+        showWeekView();
+    }
+    else {
+        calendarViewMode = "month";
+        showMonthView();
+    } 
 });
 
 document.getElementById("profileCard").addEventListener("click", () => {

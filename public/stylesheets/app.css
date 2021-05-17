@@ -288,12 +288,15 @@ ol, li {
 
 .friend-item {
     margin:0.25rem;
-    cursor: pointer;
     border-radius: 3px;
     padding:0.15rem;
 }
 .friend-item > label {
-    margin-left: 0.25rem;
+    padding-left: 0.25rem;
+    cursor: pointer;
+}
+.friend-item > input {
+    cursor: pointer;
 }
 #friendCalendarList {
     overflow-x: hidden;
