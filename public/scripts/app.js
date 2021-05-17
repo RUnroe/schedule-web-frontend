@@ -13,76 +13,7 @@ let currentUserId = "18162393822390028";
 let friendsList = [];
 
 //Object of calendars. if calendar is not listed in here, fetch it
-let allCalendars = {
-    "18162393822390028": [
-        {
-          "start": "2021-05-28T16:23-07:00" // can pass this directly into `new Date(...)`
-        , "end"  : "2021-05-28T19:14-07:00"
-        }
-        , {
-          "start": "2021-05-02T12:28-07:00"
-        , "end"  : "2021-05-02T16:19-07:00"
-        }
-        , {
-            "start": "2021-04-02T12:28-07:00"
-          , "end"  : "2021-04-02T16:19-07:00"
-          }
-        , {
-            "start": "2021-04-02T12:28-07:00"
-        ,   "end"  : "2021-04-02T16:19-07:00"
-        }
-      ],
-      "1816239382239": [
-        {
-          "start": "2021-05-28T16:23-07:00" // can pass this directly into `new Date(...)`
-        , "end"  : "2021-05-28T19:14-07:00"
-        }
-        , {
-          "start": "2021-05-03T12:28-07:00"
-        , "end"  : "2021-05-03T16:19-07:00"
-        }
-      ],
-    "18162393822390029": [
-        {
-          "start": "2021-05-28T16:23-07:00" // can pass this directly into `new Date(...)`
-        , "end"  : "2021-05-28T19:14-07:00"
-        }
-        , {
-          "start": "2021-05-03T12:28-07:00"
-        , "end"  : "2021-05-03T16:19-07:00"
-        }
-      ],
-    "18162393822390030": [
-        {
-          "start": "2021-05-29T16:23-07:00" // can pass this directly into `new Date(...)`
-        , "end"  : "2021-05-29T19:14-07:00"
-        }
-        , {
-          "start": "2021-05-04T12:28-07:00"
-        , "end"  : "2021-05-04T16:19-07:00"
-        }
-      ],
-    "18162393822390031": [
-        {
-          "start": "2021-05-26T16:23-07:00" // can pass this directly into `new Date(...)`
-        , "end"  : "2021-05-26T19:14-07:00"
-        }
-        , {
-          "start": "2021-05-02T12:28-07:00"
-        , "end"  : "2021-05-02T16:19-07:00"
-        }
-      ],
-      "18162393822390032": [
-        {
-          "start": "2021-05-26T16:23-07:00" // can pass this directly into `new Date(...)`
-        , "end"  : "2021-05-26T19:14-07:00"
-        }
-        , {
-          "start": "2021-05-02T14:28-07:00"
-        , "end"  : "2021-05-02T16:19-07:00"
-        }
-      ],
-};
+let allCalendars = {};
 
 //array of user ids
 // let activeCalendars = ["18162393822390029", "18162393822390031", "18162393822390030", "18162393822390032"];
@@ -421,10 +352,29 @@ const toggleActiveCalendar = id => {
         }
 
     }
-    if(calendarViewMode == "month") showMonthEvents(selectedMonth.format("YYYY"), selectedMonth.format("M"));
-    else showWeekEvents();
+    getCalendarData(id).then(() => {
+        if(calendarViewMode == "month") showMonthEvents(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+        else showWeekEvents();
+    });
+
 } 
 
+//Fetch calendar data from backend
+const getCalendarData = async (userId) => {
+    if(allCalendars[userId]) return null;
+    return fetch(`${apiUrl}${apiVersion}/calendars?id=${userId}`, {
+        method: "GET", 
+        mode: "cors",
+        // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: credentials 
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        allCalendars[userId] = data[userId];
+    });
+}
 
 console.log(`${apiUrl}${apiVersion}/friends/current`);
 fetch(`${apiUrl}${apiVersion}/friends/current`, {
@@ -434,7 +384,6 @@ fetch(`${apiUrl}${apiVersion}/friends/current`, {
     credentials: credentials 
 })
 .then(response => {
-    console.log(response);
     return response.json();
 })
 .then(data => {
@@ -443,8 +392,6 @@ fetch(`${apiUrl}${apiVersion}/friends/current`, {
 });
 
 
-
-showMonthView();
 
 document.getElementById("calendarViewModeSelect").addEventListener("change", event => {
     if(event.target.value == "week") {
@@ -468,3 +415,5 @@ document.getElementById("friendsPageBtn").addEventListener("click", () => {
 document.getElementById("toggleMenuBtn").addEventListener("click", () => {
     document.getElementById("leftMenu").classList.toggle("expanded");
 });
+
+getCalendarData(currentUserId).then(() => (showMonthView()));
