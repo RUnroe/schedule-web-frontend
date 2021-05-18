@@ -319,11 +319,7 @@ const showWeekView = () => {
 
     if(!initialWeekDays) setInitialWeekDays();
 
-    for(let i = 0; i < WEEKDAYS.length; i++) {
-        const weekDayElement = document.createElement("li");
-        document.getElementById("days-of-week").appendChild(weekDayElement);
-        weekDayElement.innerText = `${WEEKDAYS[i]} - ${currentWeekDays[i].date()}`;
-    }
+    
 
     createWeekCalendar();
     initWeekSelectors();
@@ -364,7 +360,12 @@ const createWeekCalendar = () => {
     `${currentWeekDays[0].format("MMMM")} ${currentWeekDays[0].format("D")} -${currentWeekDays[1].isSame(currentWeekDays[6], 'month') ? "" : (" " + currentWeekDays[6].format("MMMM"))} ${currentWeekDays[6].format("D")}`
 
     // removeAllDayElements(calendarDaysElement);
-
+    document.getElementById("days-of-week").innerHTML = "";
+    for(let i = 0; i < WEEKDAYS.length; i++) {
+        const weekDayElement = document.createElement("li");
+        document.getElementById("days-of-week").appendChild(weekDayElement);
+        weekDayElement.innerText = `${WEEKDAYS[i]} - ${currentWeekDays[i].date()}`;
+    }
 
     //Add time on left of calendar 
     let timeScale = document.createElement("li");
