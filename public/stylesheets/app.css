@@ -210,9 +210,18 @@ ol, li {
     padding-top: 10px;
 }
 
-.day-of-week, .days-grid {
+.day-of-week, .days-grid  {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+}
+.calendar-week .day-of-week {
+    padding-left:3.2rem;
+}
+
+.week-days-grid {
+    display: grid;
+    grid-template-columns: 3.2rem repeat(7, 1fr);
+
 }
 
 .day-of-week > li {
@@ -223,7 +232,7 @@ ol, li {
     text-align: center;
 }
 
-.days-grid {
+.days-grid, .week-days-grid {
     height: 100%;
     position: relative;
     grid-column-gap: var(--grid-gap);
@@ -267,6 +276,17 @@ ol, li {
     border-radius: 100vh;
     background-color: var(--color-brown-medium);
     padding: 0.15rem;
+}
+.time-scale {
+    padding: 0 3px;
+    border-right:1px solid var(--color-brown-medium);
+    background-color: var(--color-tan);
+}
+.time-scale > div {
+    text-align: right;
+    padding: 1rem 0;
+    font-size: 1rem;
+    line-height: 1rem;
 }
 
 #toggleMenuBtn {

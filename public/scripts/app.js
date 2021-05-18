@@ -358,15 +358,26 @@ const changeWeek = (direction) => {
 }
 
 const createWeekCalendar = () => {
-    const calendarDaysElement = document.getElementById("calendar-days");
+    const calendarDaysElement = document.getElementById("week-calendar-days");
 
     document.getElementById("selected-week").innerHTML = 
     `${currentWeekDays[0].format("MMMM")} ${currentWeekDays[0].format("D")} -${currentWeekDays[1].isSame(currentWeekDays[6], 'month') ? "" : (" " + currentWeekDays[6].format("MMMM"))} ${currentWeekDays[6].format("D")}`
 
-    removeAllDayElements(calendarDaysElement);
+    // removeAllDayElements(calendarDaysElement);
 
 
     //Add time on left of calendar 
+    let timeScale = document.createElement("li");
+    timeScale.classList.add("time-scale");
+    for(let i = 0; i < 24; i++) {
+        let suffix = i >= 12 ? " PM":" AM";
+        let hour = ((i + 11) % 12 + 1) + suffix;
+        let timeBlock = document.createElement("div");
+        timeBlock.innerHTML = hour;
+        timeScale.appendChild(timeBlock);
+    }
+    calendarDaysElement.appendChild(timeScale);
+
     currentWeekDays.forEach((day) => {
         appendWeekDay(day, calendarDaysElement);
     });
@@ -375,7 +386,7 @@ const createWeekCalendar = () => {
 
 const appendWeekDay = (day, calendarDaysElement) => {
     const dayElement = document.createElement("li");
-    dayElement.id = day.date;
+    dayElement.id = day.format("YYYY-MM-DD");
     dayElement.classList.add("week-day");
 
     const eventsList = document.createElement("div");
