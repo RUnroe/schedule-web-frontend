@@ -70,14 +70,13 @@ const generateFriendItem = (friend, type) => {
     let container = document.createElement("div");
     container.classList.add("friend-item");
 
-    let imageContainer = document.createElement("div");
-    imageContainer.classList.add("img-circle");
+    // let imageContainer = document.createElement("div");
+    // imageContainer.classList.add("img-circle");
 
-    let image = document.createElement("img");
-    image.classList.add("img");
-    // image.id  = "profileImg";
-    image.src = friend.icon;
-    imageContainer.appendChild(image);
+    // let image = document.createElement("img");
+    // image.classList.add("img");
+    // image.src = friend.icon;
+    // imageContainer.appendChild(image);
 
     let name = document.createElement("p");
     name.innerHTML = friend.name;
@@ -114,7 +113,7 @@ const generateFriendItem = (friend, type) => {
         btnArea.appendChild(addBtn);
     }
 
-    container.appendChild(imageContainer);
+    // container.appendChild(imageContainer);
     container.appendChild(name);
     container.appendChild(btnArea);
     return container;

@@ -67,9 +67,9 @@ h1 {
 
 .friend-item {
     display:grid;
-    grid-template-columns:3rem 1fr 4em;
+    grid-template-columns:1fr 4em;
     border-bottom: 2px solid var(--color-brown-medium);
-    padding:1rem 1rem 0.7rem 1rem;
+    padding:1rem 1rem 0.7rem 0.5rem;
     box-sizing: border-box;
 
 }
