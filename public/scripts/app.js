@@ -358,6 +358,8 @@ const createWeekCalendar = () => {
 
     document.getElementById("selected-week").innerHTML = 
     `${currentWeekDays[0].format("MMMM")} ${currentWeekDays[0].format("D")} -${currentWeekDays[1].isSame(currentWeekDays[6], 'month') ? "" : (" " + currentWeekDays[6].format("MMMM"))} ${currentWeekDays[6].format("D")}`
+    
+    document.getElementById("week-calendar-days").innerHTML = "";
 
     // removeAllDayElements(calendarDaysElement);
     document.getElementById("days-of-week").innerHTML = "";
@@ -366,6 +368,11 @@ const createWeekCalendar = () => {
         document.getElementById("days-of-week").appendChild(weekDayElement);
         weekDayElement.innerText = `${WEEKDAYS[i]} - ${currentWeekDays[i].date()}`;
     }
+
+    //Add horizontal lines to calendar
+    let dividerContainer = document.createElement("div");
+    dividerContainer.classList.add("divider-container");
+
 
     //Add time on left of calendar 
     let timeScale = document.createElement("li");
@@ -376,9 +383,13 @@ const createWeekCalendar = () => {
         let timeBlock = document.createElement("div");
         timeBlock.innerHTML = hour;
         timeScale.appendChild(timeBlock);
+
+        let divider = document.createElement("div");
+        dividerContainer.appendChild(divider);
     }
     calendarDaysElement.appendChild(timeScale);
-
+    calendarDaysElement.appendChild(dividerContainer);
+    
     currentWeekDays.forEach((day) => {
         appendWeekDay(day, calendarDaysElement);
     });
