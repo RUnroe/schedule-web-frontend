@@ -282,7 +282,30 @@ const showMonthEvents = (year, month) => {
 
 const showWeekView = () => {
     document.getElementById("calendarView").innerHTML = `
-    <div></div>
+    <div class="calendar-week">
+    <section class="calendar-week-header">
+        <div
+        id="selected-week"
+        class="calendar-week-header-selected-week"
+        ></div>
+        <section class="calendar-week-header-selectors">
+        <span id="previous-week-selector"><</span>
+        <span id="present-week-selector">Today</span>
+        <span id="next-week-selector">></span>
+        </section>
+    </section>
+
+    <ol
+        id="days-of-week"
+        class="day-of-week"
+    /></ol>
+
+    <ol
+        id="week-calendar-days"
+        class="week-days-grid"
+    >
+    </ol>
+    </div>
     `;
 }
 

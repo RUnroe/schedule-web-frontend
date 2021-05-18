@@ -173,32 +173,32 @@ ol, li {
     list-style: none;
 }
 
-.calendar-month {
+.calendar-month, .calendar-week {
     position: relative;
     background-color: var(--color-light);
     border: solid 1px var(--color-brown-medium);
 }
 
-.calendar-month-header {
+.calendar-month-header, .calendar-month-header {
     display: flex;
     justify-content: space-between;
     background-color: var(--color-tan);
     padding: 10px;
 }
 
-.calendar-month-header-selected-month {
+.calendar-month-header-selected-month, .calendar-week-header-selected-week {
     font-size: 1.4rem;
     font-weight: 600;
 }
 
-.calendar-month-header-selectors {
+.calendar-month-header-selectors, .calendar-week-header-selectors {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 80px;
 }
 
-.calendar-month-header-selectors>* {
+.calendar-month-header-selectors>*, .calendar-week-header-selectors>* {
     cursor: pointer;
 }
 
