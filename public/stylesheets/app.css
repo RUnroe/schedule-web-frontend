@@ -179,7 +179,7 @@ ol, li {
     border: solid 1px var(--color-brown-medium);
 }
 
-.calendar-month-header, .calendar-month-header {
+.calendar-month-header, .calendar-week-header {
     display: flex;
     justify-content: space-between;
     background-color: var(--color-tan);

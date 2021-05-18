@@ -1,8 +1,9 @@
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const TODAY = dayjs().format("YYYY-MM-DD");
 
-const INITIAL_YEAR = dayjs().format("YYYY");
+const INITIAL_YEAR =  dayjs().format("YYYY");
 const INITIAL_MONTH = dayjs().format("M");
+const INITIAL_DAY =   dayjs().format("D");
 
 let calendarViewMode = "month";
 
@@ -71,7 +72,7 @@ const showMonthView = () => {
 const createMonthCalendar = (year = INITIAL_YEAR, month = INITIAL_MONTH) => {
     const calendarDaysElement = document.getElementById("calendar-days");
 
-    document.getElementById("selected-month").innerText = dayjs(
+    document.getElementById("selected-month").innerHTML = dayjs(
         new Date(year, month - 1)
     ).format("MMMM YYYY");
 
@@ -90,11 +91,11 @@ const createMonthCalendar = (year = INITIAL_YEAR, month = INITIAL_MONTH) => {
     const days = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays];
 
     days.forEach((day) => {
-        appendDay(day, calendarDaysElement);
+        appendMonthDay(day, calendarDaysElement);
     });
 }
 
-const appendDay = (day, calendarDaysElement) => {
+const appendMonthDay = (day, calendarDaysElement) => {
     const dayElement = document.createElement("li");
     dayElement.id = day.date;
     const dayElementClassList = dayElement.classList;
@@ -155,7 +156,7 @@ const createDaysForPreviousMonth = (year, month) => {
     // Cover first day of the month being sunday (firstDayOfTheMonthWeekday === 0)
     // const visibleNumberOfDaysFromPreviousMonth = firstDayOfTheMonthWeekday ?
     //     firstDayOfTheMonthWeekday - 1 : 6;
-        const visibleNumberOfDaysFromPreviousMonth = firstDayOfTheMonthWeekday;
+    const visibleNumberOfDaysFromPreviousMonth = firstDayOfTheMonthWeekday;
 
     const previousMonthLastMondayDayOfMonth = dayjs(currentMonthDays[0].date)
         .subtract(visibleNumberOfDaysFromPreviousMonth, "day")
@@ -219,29 +220,28 @@ const initMonthSelectors = () => {
 const addMonthEvent = (userId, event) => {
     const date = new Date(event.start).toISOString().split("T")[0];
     const eventContainer = document.getElementById(date).getElementsByClassName("eventsList")[0];
-    eventContainer.dataset.count = (parseInt(eventContainer.dataset.count) + 1) +"";
+    eventContainer.dataset.count = (parseInt(eventContainer.dataset.count) + 1) + "";
     const countDiv = document.getElementById(date).getElementsByClassName("event-count")[0];
-    
 
-    if(document.getElementById(userId)) document.getElementById(userId).parentNode.classList.add("color-"+activeCalendars.indexOf(userId));
-    
-    if(eventContainer.childElementCount >= 2) {
+
+    if (document.getElementById(userId)) document.getElementById(userId).parentNode.classList.add("color-" + activeCalendars.indexOf(userId));
+
+    if (eventContainer.childElementCount >= 2) {
         countDiv.classList.remove("hidden");
         countDiv.innerHTML = `+${parseInt(eventContainer.dataset.count) - 2}`;
-    }
-    else {
+    } else {
         countDiv.classList.add("hidden");
 
         const eventDiv = document.createElement("div");
         eventDiv.dataset.owner = userId;
         eventDiv.dataset.time = Date.parse(event.start);
         eventDiv.classList.add("month-event");
-        eventDiv.classList.add("color-"+activeCalendars.indexOf(userId));
+        eventDiv.classList.add("color-" + activeCalendars.indexOf(userId));
 
         eventDiv.innerHTML = `<b>${getName(userId)}</b>`;
 
-        
-        if(document.getElementById(date)) {
+
+        if (document.getElementById(date)) {
             eventContainer.append(eventDiv);
         }
     }
@@ -262,7 +262,7 @@ const showMonthEvents = (year, month) => {
     });
     allCalendars[currentUserId].forEach(event => {
         let evtStartDate = new Date(event.start);
-        if((evtStartDate.getMonth()+1) == month && evtStartDate.getFullYear() == year) {
+        if ((evtStartDate.getMonth() + 1) == month && evtStartDate.getFullYear() == year) {
             addMonthEvent(currentUserId, event);
         }
     });
@@ -270,14 +270,23 @@ const showMonthEvents = (year, month) => {
     activeCalendars.forEach(id => {
         allCalendars[id].forEach(event => {
             let evtStartDate = new Date(event.start);
-            if((evtStartDate.getMonth()+1) == month && evtStartDate.getFullYear() == year) {
+            if ((evtStartDate.getMonth() + 1) == month && evtStartDate.getFullYear() == year) {
                 addMonthEvent(id, event);
             }
         });
     });
-    
+
 }
 /* #endregion */
+
+
+
+
+/* #region   */
+
+let currentDateObj = dayjs();
+let initialWeekDays;
+let currentWeekDays;
 
 
 const showWeekView = () => {
@@ -307,8 +316,155 @@ const showWeekView = () => {
     </ol>
     </div>
     `;
+
+    if(!initialWeekDays) setInitialWeekDays();
+    WEEKDAYS.forEach((weekday) => {
+        const weekDayElement = document.createElement("li");
+        document.getElementById("days-of-week").appendChild(weekDayElement);
+        weekDayElement.innerText = weekday;
+    });
+
+    createWeekCalendar();
+    initWeekSelectors();
+
+    showWeekEvents();
 }
 
+const setInitialWeekDays = () => {
+    let tempWeekDays = [];
+    let currDay = dayjs();
+    let currDayOfWeek = getWeekday(currDay.format("YYYY-MM-DD"));
+    let startOfWeek = currDay.subtract( currDayOfWeek ,"day");
+    for(let i = 0; i < 7; i++) {
+        tempWeekDays.push(startOfWeek.add(i, "day"));
+    }
+    initialWeekDays = tempWeekDays;
+    currentWeekDays = [...initialWeekDays];
+}
+
+const changeWeek = (direction) => {
+    if(direction == "present") {
+        currentWeekDays = [...initialWeekDays];
+    }
+    else {
+        tempWeekDays = [];
+        currentWeekDays.forEach(weekDay => {
+            if(direction == "next") tempWeekDays.push(weekDay.add(7, "day"));
+            else tempWeekDays.push(weekDay.subtract(7, "day"));
+        });
+        currentWeekDays = tempWeekDays;
+    }
+}
+
+const createWeekCalendar = () => {
+    const calendarDaysElement = document.getElementById("calendar-days");
+
+    document.getElementById("selected-week").innerHTML = 
+    `${currentWeekDays[0].format("MMMM")} ${currentWeekDays[0].format("D")} -${currentWeekDays[1].isSame(currentWeekDays[6], 'month') ? "" : (" " + currentWeekDays[6].format("MMMM"))} ${currentWeekDays[6].format("D")}`
+
+    removeAllDayElements(calendarDaysElement);
+
+
+    //Add time on left of calendar 
+    currentWeekDays.forEach((day) => {
+        appendWeekDay(day, calendarDaysElement);
+    });
+}
+
+
+const appendWeekDay = (day, calendarDaysElement) => {
+    const dayElement = document.createElement("li");
+    dayElement.id = day.date;
+    dayElement.classList.add("week-day");
+
+    const eventsList = document.createElement("div");
+    eventsList.classList.add("eventsList");
+    dayElement.appendChild(eventsList);
+
+
+    calendarDaysElement.appendChild(dayElement);
+
+
+}
+
+
+const initWeekSelectors = () => {
+    document.getElementById("previous-week-selector").addEventListener("click", () => {
+        changeWeek("previous");
+        createWeekCalendar();
+        showWeekEvents();
+    });
+
+    document.getElementById("present-week-selector").addEventListener("click", () => {
+        changeWeek("present");
+        createWeekCalendar();
+        showWeekEvents();
+    });
+
+    document.getElementById("next-week-selector").addEventListener("click", () => {
+        changeWeek("next");
+        createWeekCalendar();
+        showWeekEvents();
+    });
+}
+
+
+
+const showWeekEvents = () => {
+    //remove all elements first
+    document.querySelectorAll(".week-event").forEach(item => {
+        item.remove();
+    });
+
+    //remove color from friend item
+    document.querySelectorAll(".friend-item").forEach(friendItem => {
+        friendItem.className = "friend-item";
+    });
+    allCalendars[currentUserId].forEach(event => {
+        let evtStartDate = dayjs(event.start);
+        
+        currentWeekDays.forEach(weekDay => {
+            if (evtStartDate.isSame(weekDay, "day")) {
+                addWeekEvent(currentUserId, event);
+            }
+        });
+    });
+
+    activeCalendars.forEach(id => {
+        allCalendars[id].forEach(event => {
+            let evtStartDate = dayjs(event.start);
+            currentWeekDays.forEach(weekDay => {
+                if (evtStartDate.isSame(weekDay, "day")) {
+                    addWeekEvent(currentUserId, event);
+                }
+            });
+        });
+    });
+}
+
+const addWeekEvent = (userId, event) => {
+    const date = new Date(event.start).toISOString().split("T")[0];
+    const eventContainer = document.getElementById(date).getElementsByClassName("eventsList")[0];
+
+
+    if (document.getElementById(userId)) document.getElementById(userId).parentNode.classList.add("color-" + activeCalendars.indexOf(userId));
+
+    const eventDiv = document.createElement("div");
+    eventDiv.dataset.owner = userId;
+    eventDiv.dataset.time = Date.parse(event.start);
+    eventDiv.classList.add("week-event");
+    eventDiv.classList.add("color-" + activeCalendars.indexOf(userId));
+
+    eventDiv.innerHTML = `<b>${getName(userId)}</b>`;
+
+    //TODO: allow events to be side by side
+
+    if (document.getElementById(date)) {
+        eventContainer.append(eventDiv);
+    }
+    
+}
+/* #endregion */
 
 
 const formatTime = time => {
@@ -321,13 +477,13 @@ const formatTime = time => {
 const getName = id => {
     let name = "You";
     friendsList.forEach(friend => {
-        if(friend.id == id) name = friend.name;
+        if (friend.id == id) name = friend.name;
     });
     return name;
 }
 
 const getWeekday = date => {
-    console.log(`${date}`, new Date(`${date}T18:00:00+00:00`) );
+    // console.log(`${date}`, new Date(`${date}T18:00:00+00:00`));
     return new Date(`${date}T18:00:00+00:00`).getUTCDay();
     // return new Date(date).getDay();
 }
@@ -358,17 +514,16 @@ const populateFriendsList = () => {
 const toggleActiveCalendar = id => {
     let calendarIsActive = false;
     activeCalendars.forEach(calendarId => {
-        if(calendarId == id) {
+        if (calendarId == id) {
             calendarIsActive = true;
         }
     });
-    if(calendarIsActive) {
+    if (calendarIsActive) {
         activeCalendars.splice(activeCalendars.indexOf(id), 1);
-    }
-    else {
+    } else {
         activeCalendars.push(id);
-        if(activeCalendars.length > 4) {
-            for(let i = 4; i < activeCalendars.length; i++) {
+        if (activeCalendars.length > 4) {
+            for (let i = 4; i < activeCalendars.length; i++) {
                 document.getElementById(activeCalendars[0]).checked = false;
                 activeCalendars.shift();
             }
@@ -376,55 +531,54 @@ const toggleActiveCalendar = id => {
 
     }
     getCalendarData(id).then(() => {
-        if(calendarViewMode == "month") showMonthEvents(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+        if (calendarViewMode == "month") showMonthEvents(selectedMonth.format("YYYY"), selectedMonth.format("M"));
         else showWeekEvents();
     });
 
-} 
+}
 
 //Fetch calendar data from backend
 const getCalendarData = async (userId) => {
-    if(allCalendars[userId]) return null;
+    if (allCalendars[userId]) return null;
     return fetch(`${apiUrl}${apiVersion}/calendars?id=${userId}`, {
-        method: "GET", 
+            method: "GET",
+            mode: "cors",
+            // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: credentials
+        })
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            allCalendars[userId] = data[userId];
+        });
+}
+
+console.log(`${apiUrl}${apiVersion}/friends/current`);
+fetch(`${apiUrl}${apiVersion}/friends/current`, {
+        method: "GET",
         mode: "cors",
         // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: credentials 
+        credentials: credentials
     })
     .then(response => {
         return response.json();
     })
     .then(data => {
-        allCalendars[userId] = data[userId];
+        friendsList = data;
+        populateFriendsList();
     });
-}
-
-console.log(`${apiUrl}${apiVersion}/friends/current`);
-fetch(`${apiUrl}${apiVersion}/friends/current`, {
-    method: "GET", 
-    mode: "cors",
-    // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: credentials 
-})
-.then(response => {
-    return response.json();
-})
-.then(data => {
-    friendsList = data;
-    populateFriendsList();
-});
 
 
 
 document.getElementById("calendarViewModeSelect").addEventListener("change", event => {
-    if(event.target.value == "week") {
+    if (event.target.value == "week") {
         calendarViewMode = "week";
         showWeekView();
-    }
-    else {
+    } else {
         calendarViewMode = "month";
         showMonthView();
-    } 
+    }
 });
 
 document.getElementById("profileCard").addEventListener("click", () => {
