@@ -306,7 +306,7 @@ const showWeekView = () => {
 
     <ol
         id="days-of-week"
-        class="day-of-week"
+        class="day-of-week center"
     /></ol>
 
     <ol
@@ -318,11 +318,12 @@ const showWeekView = () => {
     `;
 
     if(!initialWeekDays) setInitialWeekDays();
-    WEEKDAYS.forEach((weekday) => {
+
+    for(let i = 0; i < WEEKDAYS.length; i++) {
         const weekDayElement = document.createElement("li");
         document.getElementById("days-of-week").appendChild(weekDayElement);
-        weekDayElement.innerText = weekday;
-    });
+        weekDayElement.innerText = `${WEEKDAYS[i]} - ${currentWeekDays[i].date()}`;
+    }
 
     createWeekCalendar();
     initWeekSelectors();
