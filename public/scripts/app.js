@@ -17,7 +17,6 @@ let friendsList = [];
 let allCalendars = {};
 
 //array of user ids
-// let activeCalendars = ["18162393822390029", "18162393822390031", "18162393822390030", "18162393822390032"];
 let activeCalendars = [];
 /* #region   */
 
@@ -401,11 +400,6 @@ const appendWeekDay = (day, calendarDaysElement) => {
     dayElement.id = day.format("YYYY-MM-DD");
     dayElement.classList.add("week-day");
 
-    const eventsList = document.createElement("div");
-    eventsList.classList.add("eventsList");
-    dayElement.appendChild(eventsList);
-
-
     calendarDaysElement.appendChild(dayElement);
 
 
@@ -452,6 +446,7 @@ const showWeekEvents = () => {
                 addWeekEvent(currentUserId, event);
             }
         });
+        adjustWidthOfWeekEvents();
     });
 
     activeCalendars.forEach(id => {
@@ -459,16 +454,17 @@ const showWeekEvents = () => {
             let evtStartDate = dayjs(event.start);
             currentWeekDays.forEach(weekDay => {
                 if (evtStartDate.isSame(weekDay, "day")) {
-                    addWeekEvent(currentUserId, event);
+                    addWeekEvent(id, event);
                 }
             });
         });
+        adjustWidthOfWeekEvents();
     });
 }
 
 const addWeekEvent = (userId, event) => {
     const date = new Date(event.start).toISOString().split("T")[0];
-    const eventContainer = document.getElementById(date).getElementsByClassName("eventsList")[0];
+    const eventContainer = document.getElementById(date);
 
 
     if (document.getElementById(userId)) document.getElementById(userId).parentNode.classList.add("color-" + activeCalendars.indexOf(userId));
@@ -481,12 +477,87 @@ const addWeekEvent = (userId, event) => {
 
     eventDiv.innerHTML = `<b>${getName(userId)}</b>`;
 
-    //TODO: allow events to be side by side
+   
+    eventDiv.style.marginTop = `${dayjs(event.start).hour() * 3}rem`;
+    eventDiv.style.height = `${((dayjs(event.end).hour() - dayjs(event.start).hour()) * 3)-0.1}rem`;
 
+    eventDiv.dataset.startTime = `${dayjs(event.start).hour()}:${dayjs(event.start).minute()}`;
+    eventDiv.dataset.endTime = `${dayjs(event.end).hour()}:${dayjs(event.end).minute()}`;
+    eventDiv.dataset.leftNeighbors = 0;
+    eventDiv.dataset.rightNeighbors = 0;
+
+    
+    
     if (document.getElementById(date)) {
         eventContainer.append(eventDiv);
     }
     
+}
+
+const adjustWidthOfWeekEvents = () => {
+    //loop through each day of current week element
+        //iterate over each event
+            //iterate over each event
+                //If currEvent has a neighbor, add to neighbor count
+    document.querySelectorAll(".week-day").forEach(dayColumn => {
+        dayColumn.childNodes.forEach(selectedEvent => {
+            let observingBeforeSelected = true;
+            dayColumn.childNodes.forEach(observedEvent => {
+                if(selectedEvent != observedEvent) {
+                    if(areNeighbors(selectedEvent, observedEvent)) {
+                        if(observingBeforeSelected) selectedEvent.dataset.leftNeighbors = parseInt(selectedEvent.dataset.leftNeighbors) + 1;
+                        else selectedEvent.dataset.rightNeighbors = parseInt(selectedEvent.dataset.rightNeighbors) + 1;
+                    }
+                }
+                else {
+                    observingBeforeSelected = false;
+                }
+            });
+        });
+    });
+
+    //adjust widths based on neighbor count
+    document.querySelectorAll(".week-day").forEach(dayColumn => {
+        dayColumn.childNodes.forEach(selectedEvent => {
+            let neighbors = parseInt(selectedEvent.dataset.leftNeighbors) + parseInt(selectedEvent.dataset.rightNeighbors); 
+            let width = (100 / (neighbors+1))-1;
+            selectedEvent.style.width = `${width}%`;
+            selectedEvent.style.left = `${(width * parseInt(selectedEvent.dataset.leftNeighbors)) + parseInt(selectedEvent.dataset.leftNeighbors)}%`;
+        });
+    });
+}
+
+const areNeighbors = (firstEvent, secondEvent) => {
+    if(compareDates(firstEvent.dataset.startTime, secondEvent.dataset.startTime, "lte")) {
+        //firstEvent starts before or at same time as secondEvent
+        return compareDates(secondEvent.dataset.startTime, firstEvent.dataset.endTime, "lt");
+    }
+    else {
+        //secondEvent starts before firstEvent
+        return compareDates(firstEvent.dataset.startTime, secondEvent.dataset.endTime, "lt");
+    }
+}
+
+const compareDates = (firstDate, secondDate, comparison) => {
+    console.log(firstDate, secondDate);
+    switch(comparison) {
+        case "lte":
+            //If first date hour is less than second date hour
+            if(parseInt(firstDate.split(":")[0]) == parseInt(secondDate.split(":")[0])) {
+                //return true if first date minutes are greater than or equal to 
+                return parseInt(firstDate.split(":")[1]) <= parseInt(secondDate.split(":")[1]);
+            } 
+            return parseInt(firstDate.split(":")[0]) < parseInt(secondDate.split(":")[0]);
+            break;
+        case "lt": 
+            //If first date hour is less than second date hour
+            if(parseInt(firstDate.split(":")[0]) == parseInt(secondDate.split(":")[0])) {
+                //return true if first date minutes are less than second date minutes
+                return parseInt(firstDate.split(":")[1]) < parseInt(secondDate.split(":")[1]);
+            } 
+            return parseInt(firstDate.split(":")[0]) < parseInt(secondDate.split(":")[0]);
+            break;
+    }
 }
 /* #endregion */
 
