@@ -325,6 +325,20 @@ ol, li {
     z-index: 5;
 }
 
+
+
+.calendar-display-container {
+    display:grid;
+    margin:0.25rem;
+    grid-template-columns: 1rem 1fr;
+}
+.calendar-display-container > p {
+   margin:0 0.25rem;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}
+
 #toggleMenuBtn {
     display:none;
     justify-content: center;

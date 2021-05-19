@@ -178,11 +178,9 @@ const createDaysForNextMonth = (year, month) => {
     const lastDayOfTheMonthWeekday = getWeekday(
         `${year}-${month.length == 1 ? `0${month}` : month}-${currentMonthDays.length}`
     );
-    console.log(lastDayOfTheMonthWeekday);
     const nextMonth = dayjs(`${year}-${month}-01`).add(1, "month");
 
     const visibleNumberOfDaysFromNextMonth = 6 - lastDayOfTheMonthWeekday;
-    console.log(visibleNumberOfDaysFromNextMonth);
     return [...Array(visibleNumberOfDaysFromNextMonth)].map((day, index) => {
         return {
             date: dayjs(
@@ -605,6 +603,27 @@ const populateFriendsList = () => {
     });
 }
 
+const populateCalendarList = (data) => {
+
+    let list = Object.values(data);
+    list.forEach(calendar => {
+        let container = document.createElement("div");
+        container.classList.add("calendar-display-container");
+
+        let visibilityDisplay = document.createElement("div");
+        visibilityDisplay.classList.add("calendar-display-visibility");
+        visibilityDisplay.innerHTML = calendar.enabled ? "&#10004;" : "&#10006;";
+
+        container.appendChild(visibilityDisplay);
+        let calendarName = document.createElement("p");
+        calendarName.classList.add("calendar-display-name");
+        calendarName.innerHTML = calendar.name;
+
+        container.appendChild(calendarName);
+        document.getElementById("yourCalendarList").appendChild(container);
+    });
+}
+
 const toggleActiveCalendar = id => {
     let calendarIsActive = false;
     activeCalendars.forEach(calendarId => {
@@ -647,21 +666,34 @@ const getCalendarData = async (userId) => {
             allCalendars[userId] = data[userId];
         });
 }
-
-console.log(`${apiUrl}${apiVersion}/friends/current`);
+//FETCH friends list
 fetch(`${apiUrl}${apiVersion}/friends/current`, {
-        method: "GET",
-        mode: "cors",
-        // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: credentials
-    })
-    .then(response => {
-        return response.json();
-    })
-    .then(data => {
-        friendsList = data;
-        populateFriendsList();
-    });
+    method: "GET",
+    mode: "cors",
+    // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: credentials
+})
+.then(response => {
+    return response.json();
+})
+.then(data => {
+    friendsList = data;
+    populateFriendsList();
+});
+
+//FETCH current users calendars
+fetch(`${apiUrl}${apiVersion}/calendars/details`, {
+    method: "GET",
+    mode: "cors",
+    // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: credentials
+})
+.then(response => {
+    return response.json();
+})
+.then(data => {
+    populateCalendarList(data);
+});
 
 
 
