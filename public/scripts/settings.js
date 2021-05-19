@@ -201,10 +201,18 @@ const saveChanges = () => {
         }
         return calendar;
     });
-    console.log(modifiedList);
+    let calObject = {};
+    modifiedList.forEach(calendar => {
+        calObject[calendar.id] = {
+            name: calendar.name,
+            url: calendar.url,
+            enabled: calendar.enabled
+        };
+    });
+    console.log(calObject);
     //fetch request. Send calendar list to backend
 
-    backToApp();
+    // backToApp();
 }
 
 const isTextValid = text => {
@@ -224,36 +232,14 @@ const isIcsValid = ics => {
 }
 
 
-const populateCalendarList = (dat) => {
-    let data = {
-        "181783920193021334": {
-          "name": "get outlook for toster"
-          , "url": "https://eeee.outlook.com/ur-mom.ics"
-          , "enabled": true
-        }
-        , "181783920193021336": {
-          "name": "gogle"
-          , "url": "https://gmail.google.com/zoinks.ics"
-          , "enabled": false
-        }
-        , "181783920193021337": {
-          "name": "YAHOOOOOOOO"
-          , "url": "https://yahoo.mx/adsadfal.ics"
-          , "enabled": true
-        }
-        , "181783920193021338": {
-          "name": "wait are you guys outside"
-          , "url": "https://cody.ashby/no/sorry.ics"
-          , "enabled": true
-        }
-      }
-    
+const populateCalendarList = (data) => {
+    let list = [];
     Object.keys(data).forEach(dataKey => {
         let obj = {id: dataKey};
-        userCalendarList.push(Object.assign(obj, data[dataKey]));
+        list.push(Object.assign(obj, data[dataKey]));
     });
 
-    userCalendarList.forEach(cal => {
+    list.forEach(cal => {
         addCalendar(cal.name, cal.url, cal.id, cal.enabled)
     });
 }
