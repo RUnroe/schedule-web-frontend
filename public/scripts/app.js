@@ -446,9 +446,8 @@ const showWeekEvents = () => {
                 addWeekEvent(currentUserId, event);
             }
         });
-        adjustWidthOfWeekEvents();
     });
-
+    
     activeCalendars.forEach(id => {
         allCalendars[id].forEach(event => {
             let evtStartDate = dayjs(event.start);
@@ -458,8 +457,8 @@ const showWeekEvents = () => {
                 }
             });
         });
-        adjustWidthOfWeekEvents();
     });
+    adjustWidthOfWeekEvents();
 }
 
 const addWeekEvent = (userId, event) => {
@@ -505,6 +504,7 @@ const adjustWidthOfWeekEvents = () => {
             dayColumn.childNodes.forEach(observedEvent => {
                 if(selectedEvent != observedEvent) {
                     if(areNeighbors(selectedEvent, observedEvent)) {
+                        console.log(selectedEvent, observedEvent);
                         if(observingBeforeSelected) selectedEvent.dataset.leftNeighbors = parseInt(selectedEvent.dataset.leftNeighbors) + 1;
                         else selectedEvent.dataset.rightNeighbors = parseInt(selectedEvent.dataset.rightNeighbors) + 1;
                     }
@@ -539,7 +539,6 @@ const areNeighbors = (firstEvent, secondEvent) => {
 }
 
 const compareDates = (firstDate, secondDate, comparison) => {
-    console.log(firstDate, secondDate);
     switch(comparison) {
         case "lte":
             //If first date hour is less than second date hour
