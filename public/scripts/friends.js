@@ -136,5 +136,6 @@ const removeFriend = () => {
 }
 
 
+
 document.getElementById("friendSearchInput").addEventListener("input", () => {updateResultList()});
 getCurrentFriendsList();

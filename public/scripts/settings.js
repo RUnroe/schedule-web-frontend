@@ -23,7 +23,7 @@ const updateCalendarListDisplay = () => {
 const createCalendarItem = calendar => {
     let calendarItem = document.createElement("div");
     calendarItem.classList.add("calendar-item");
-    if(!calendar.visible) calendarItem.classList.add("disabled");
+    if(!calendar.enabled) calendarItem.classList.add("disabled");
     calendarItem.id = calendar.id;
 
     let calendarName = document.createElement("p");
@@ -33,7 +33,7 @@ const createCalendarItem = calendar => {
     calendarItem.appendChild(calendarName);
     let calendarICS = document.createElement("p");
     calendarICS.classList.add("calendar-ics");
-    calendarICS.innerHTML = calendar.ics;
+    calendarICS.innerHTML = calendar.url;
 
     let btnGroup = document.createElement("div");
     btnGroup.classList.add("btn-group");
@@ -42,7 +42,7 @@ const createCalendarItem = calendar => {
     visibilityBtn.classList.add("visibility");
     visibilityBtn.classList.add("icon-btn");
     //Image came from https://fontawesome.com/icons. Color has been modified.
-    visibilityBtn.innerHTML = `<img src=${calendar.visible ? "../images/eye-solid.svg" : "../images/eye-slash-solid.svg" } />`;
+    visibilityBtn.innerHTML = `<img src=${calendar.enabled ? "../images/eye-solid.svg" : "../images/eye-slash-solid.svg" } />`;
     visibilityBtn.addEventListener("click", () => {
         toggleVisibility(calendar.id);
     });
@@ -81,10 +81,10 @@ const toggleVisibility = id => {
             let newObject = {
                 id: object.id,
                 name: object.name,
-                ics: object.ics
+                url: object.url
             }
-            visibility = !object.visible;
-            newObject.visible = visibility;
+            visibility = !object.enabled;
+            newObject.enabled = visibility;
             return newObject;
         } 
         return object;
@@ -101,12 +101,12 @@ const removeCalendar = id => {
     checkIfListIsEmpty();
 }
 
-const addCalendar = (name, ics) => {
+const addCalendar = (name, ics, id = `replace${newId++}`, enabled = true) => {
    let newCalendar = {
-        id: `replace${newId++}`,
+        id,
         name,
-        ics,
-        visible: true
+        url: ics,
+        enabled
    }
    if(userCalendarList.length == 0) document.getElementById("calendarList").innerHTML = "";
    document.getElementById("calendarList").appendChild(createCalendarItem(newCalendar));
@@ -146,7 +146,7 @@ const exitEditMode = () => {
             let icsDisplay = document.createElement("p");
             icsDisplay.classList.add("calendar-ics");
             if(isIcsValid(icsText))icsDisplay.innerHTML = icsText;
-            else icsDisplay.innerHTML = jsonCalendar.ics;
+            else icsDisplay.innerHTML = jsonCalendar.url;
             
             let nameText = calendarItem.childNodes[0].value;
             calendarItem.childNodes[0].remove();
@@ -166,8 +166,8 @@ const exitEditMode = () => {
                     let newObject = {
                         id: object.id,
                         name: nameText,
-                        ics: icsText,
-                        visible: object.visible
+                        url: icsText,
+                        enabled: object.visible
                     }
                     return newObject;
                 } 
@@ -222,6 +222,58 @@ const isIcsValid = ics => {
     document.getElementById("ErrorMsg").innerHTML = "Invalid ICS link";
     return false;
 }
+
+
+const populateCalendarList = (dat) => {
+    let data = {
+        "181783920193021334": {
+          "name": "get outlook for toster"
+          , "url": "https://eeee.outlook.com/ur-mom.ics"
+          , "enabled": true
+        }
+        , "181783920193021336": {
+          "name": "gogle"
+          , "url": "https://gmail.google.com/zoinks.ics"
+          , "enabled": false
+        }
+        , "181783920193021337": {
+          "name": "YAHOOOOOOOO"
+          , "url": "https://yahoo.mx/adsadfal.ics"
+          , "enabled": true
+        }
+        , "181783920193021338": {
+          "name": "wait are you guys outside"
+          , "url": "https://cody.ashby/no/sorry.ics"
+          , "enabled": true
+        }
+      }
+    
+    Object.keys(data).forEach(dataKey => {
+        let obj = {id: dataKey};
+        userCalendarList.push(Object.assign(obj, data[dataKey]));
+    });
+
+    userCalendarList.forEach(cal => {
+        addCalendar(cal.name, cal.url, cal.id, cal.enabled)
+    });
+}
+
+
+//FETCH current users calendars
+fetch(`${apiUrl}${apiVersion}/calendars/details`, {
+    method: "GET",
+    mode: "cors",
+    // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: credentials
+})
+.then(response => {
+    return response.json();
+})
+.then(data => {
+    populateCalendarList(data);
+});
+
+
 
 document.getElementById("createCalendarBtn").addEventListener("click", () => {
     const name = document.getElementById("nameInput").value;
