@@ -59,6 +59,12 @@ header h1 {
 
 .calendar-item input {
     font-family: 'Reem Kufi', sans-serif;
+    width:90%;
+    border-radius: 3px;
+    background-color: var(--color-light);
+    border:1px solid var(--color-brown-medium);
+    padding:2px;
+
 
 }
 .calendar-item.disabled {

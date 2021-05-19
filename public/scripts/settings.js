@@ -56,7 +56,11 @@ const createCalendarItem = calendar => {
     editBtn.innerHTML = `<img src="../images/pencil-alt-solid.svg" />`;
     editBtn.addEventListener("click", () => {
         if(document.getElementById(calendar.id).dataset.editMode === "true") exitEditMode();
-        else enterEditMode(calendar.id);
+        else {
+            //Exit edit mode on all calendars first and then open the selected one
+            exitEditMode();
+            enterEditMode(calendar.id);
+        }
     });
     btnGroup.appendChild(editBtn);
 
@@ -114,8 +118,6 @@ const addCalendar = (name, ics, id = `replace${newId++}`, enabled = true) => {
 }
 
 const enterEditMode = (id) => {
-    console.log("enter");
-
     const calendarItem = document.getElementById(id);
     let icsText = calendarItem.getElementsByClassName("calendar-ics")[0].innerHTML;
     calendarItem.getElementsByClassName("calendar-ics")[0].remove();
@@ -135,7 +137,6 @@ const enterEditMode = (id) => {
 }
 
 const exitEditMode = () => {
-    console.log("exit");
     document.getElementById("calendarList").childNodes.forEach(calendarItem => {
         if(calendarItem.dataset.editMode === "true") {
             let jsonCalendar = userCalendarList.filter(cal => cal.id == calendarItem.id)[0];
@@ -209,7 +210,7 @@ const saveChanges = () => {
             enabled: calendar.enabled
         };
     });
-    console.log(calObject);
+    // console.log(calObject);
     //fetch request. Send calendar list to backend
 
     // backToApp();
