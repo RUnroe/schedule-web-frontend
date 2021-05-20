@@ -210,7 +210,7 @@ const saveChanges = () => {
             enabled: calendar.enabled
         };
     });
-    // console.log(calObject);
+    console.log(calObject);
     //fetch request. Send calendar list to backend
 
     // backToApp();

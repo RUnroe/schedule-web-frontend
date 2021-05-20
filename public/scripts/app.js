@@ -220,9 +220,6 @@ const addMonthEvent = (userId, event) => {
     eventContainer.dataset.count = (parseInt(eventContainer.dataset.count) + 1) + "";
     const countDiv = document.getElementById(date).getElementsByClassName("event-count")[0];
 
-
-    if (document.getElementById(userId)) document.getElementById(userId).parentNode.classList.add("color-" + activeCalendars.indexOf(userId));
-
     if (eventContainer.childElementCount >= 2) {
         countDiv.classList.remove("hidden");
         countDiv.innerHTML = `+${parseInt(eventContainer.dataset.count) - 2}`;
@@ -271,7 +268,10 @@ const showMonthEvents = (year, month) => {
                 addMonthEvent(id, event);
             }
         });
+        if (document.getElementById(id)) document.getElementById(id).parentNode.classList.add("color-" + activeCalendars.indexOf(id));
     });
+
+
 
 }
 /* #endregion */
@@ -455,6 +455,7 @@ const showWeekEvents = () => {
                 }
             });
         });
+        if (document.getElementById(id)) document.getElementById(id).parentNode.classList.add("color-" + activeCalendars.indexOf(id));
     });
     adjustWidthOfWeekEvents();
 }
@@ -464,7 +465,6 @@ const addWeekEvent = (userId, event) => {
     const eventContainer = document.getElementById(date);
 
 
-    if (document.getElementById(userId)) document.getElementById(userId).parentNode.classList.add("color-" + activeCalendars.indexOf(userId));
 
     const eventDiv = document.createElement("div");
     eventDiv.dataset.owner = userId;
