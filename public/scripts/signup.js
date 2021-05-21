@@ -12,14 +12,20 @@ const validateForm = () => {
     results.push(validateField(lNameInput, validateName));
     results.push(validateField(passInput, validatePassword));
     results.push(confirmPass(confirmPassInput, passInput, confirmPassword));
-
+    console.log(results);
+    let retValue = true;
     results.forEach(result => {
-        if (!result) return false;
+        if (!result) retValue = false;
     });
-    return true;
+    return retValue;
 } 
 
-
+const postData = () => {
+    console.log(
+        emailInput.value,
+        fNameInput.value + " " + lNameInput.value
+    )
+}
 
 const confirmPass = (confirmField, passField, validationCallback) => {
     let result = validationCallback(confirmField.value, passField.value); 
@@ -31,6 +37,7 @@ const confirmPass = (confirmField, passField, validationCallback) => {
     else {
         if(!errorMessage.classList.contains("hidden")) errorMessage.classList.add("hidden");
     }
+    return result.isValid;
 }
 
 emailInput.addEventListener("focusout", () => {
@@ -47,6 +54,11 @@ passInput.addEventListener("focusout", () => {
 });
 confirmPassInput.addEventListener("focusout", () => {
     confirmPass(confirmPassInput, passInput, confirmPassword);
+});
+
+
+document.getElementById("createAccountBtn").addEventListener("click", () => {
+    if(validateForm()) postData();
 });
 
 //set up create account btn. have it call method. Method checks if validateForm is true. if it is, send fetch request
