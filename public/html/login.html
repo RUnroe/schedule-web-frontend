@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="../stylesheets/login.css" />
     
     <script defer src="../scripts/data.js"></script>
+    <script defer src="../scripts/validation.js"></script>
+    <script defer src="../scripts/login.js"></script>
 
     <title>Waffle! - Log In</title>
 </head>
@@ -38,15 +40,17 @@
             <div class="form-block">
                 <label class="input-label" for="emailInput">Email</label>
                 <input class="input-field" type="text" id="emailInput" />
+                <span id="emailErrorMsg" class="error-message hidden">Invalid email</span>
             </div>
             
             <div class="form-block">
                 <label class="input-label" for="passInput">Password</label>
                 <input class="input-field" type="password" id="passInput" />
+                <span id="passErrorMsg" class="error-message hidden">Invalid password (8 characters, 1 letter, and 1 number)</span> 
             </div>
             
             <span id="errorMsg" class="error-message hidden">Invalid Email/Password</span> 
-            <button class="btn cta" id="createAccountBtn">Log In</button>
+            <button class="btn cta" id="loginBtn">Log In</button>
         </div>
         </div>
     </div>

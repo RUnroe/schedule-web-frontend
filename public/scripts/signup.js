@@ -21,10 +21,12 @@ const validateForm = () => {
 } 
 
 const postData = () => {
+    //TODO 
     console.log(
         emailInput.value,
         fNameInput.value + " " + lNameInput.value
-    )
+    );
+    // window.location.href = "/login";
 }
 
 const confirmPass = (confirmField, passField, validationCallback) => {
@@ -61,4 +63,3 @@ document.getElementById("createAccountBtn").addEventListener("click", () => {
     if(validateForm()) postData();
 });
 
-//set up create account btn. have it call method. Method checks if validateForm is true. if it is, send fetch request
