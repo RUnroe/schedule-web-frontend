@@ -19,14 +19,19 @@
     <header>
         <div class="section">
             <div class="back-arrow"> <img src="../images/arrow.svg" /> </div>
-            <h1 id="pageTitle">Search For Friends</h1>
+            <h1>Search For Friends</h1>
         </div>
     </header>
+
+    <div id="messageContainer">
+        <p id="messageText"></p>
+    </div>
+
     <div class="search-container">
         <input id="friendSearchInput" class="input-field" type="text" placeholder="Type in a friends name here..." />
     </div>
     <div class="content section">
-        <h1>Current Friends List</h1>
+        <h1 id="pageTitle">Current Friends List</h1>
         <div class="friends-list-section">
             <div id="searchResultsList">
                 <!-- Auto populated based on search term -->
@@ -35,25 +40,12 @@
                 <h2>Pending Friends</h2>
                 <div id="pendingFriends">
                     <!-- Auto populated based on pending friends -->
-                    <div class="friend-item">
-                        
-                        <p>Friend name</p>
-                        <div class="btn-area">
-                            <div class="accept">&#10004;</div>
-                            <div class="delete">&#10006;</div>
-                        </div>
-                    </div>
+                   
                 </div>
                 <h2>All Friends</h2>
                 <div id="allFriends">
                     <!-- Auto populated based on all friends -->
-                    <div class="friend-item">
-                        
-                        <p>Friend name</p>
-                        <div class="btn-area">
-                            <div class="delete">&#10006;</div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>

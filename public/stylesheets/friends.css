@@ -102,6 +102,36 @@ h1 {
     text-align: center;
 }
 
-#allFriends .btn-area {
+#allFriends .btn-area, #searchResultsList .btn-area {
     justify-content: flex-end;
+}
+
+#searchResultsList .accept {
+    font-size: 1.7rem;
+}
+
+
+#messageContainer {
+    position:fixed;
+    top:0;
+    width:100%;
+    height:3.7rem;
+    background-color: var(--color-light);
+    color:var(--color-brown-medium);
+    letter-spacing: 0.05rem;
+    transform:translateY(-100%);
+    transition: transform 0.35s ease;
+    text-align: center;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 100;
+}
+#messageContainer.show {
+    transform: translateY(0);
+}
+
+#messageContainer > p {
+    margin: 0;
+    font-weight: bold;
 }

@@ -9,12 +9,12 @@ const backToApp = () => {
 const updateResultList = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-        const searchTerm = document.getElementById("friendSearchInput").value; 
+        let searchTerm = document.getElementById("friendSearchInput").value; 
         if(searchTerm) {
             searchTerm = searchTerm.trim();
             searchTerm = searchTerm.replaceAll(" ", "+");
 
-            fetch(`${apiUrl}/api/${apiVersion}/friends/search?q=${searchTerm}`)
+            fetch(`${apiUrl}${apiVersion}/friends/search?q=${searchTerm}`)
             .then((response) => response.json())
             .then((data) => {
                 populateResultsList(data);
@@ -29,12 +29,14 @@ const updateResultList = () => {
 
 const toggleFriendsList = resultCount => {
     if(showingResults) {
+        showingResults = false;
         document.getElementById("pageTitle").innerHTML = "Current Friends List";
         document.getElementById("searchResultsList").style.display = "none";
         document.getElementById("currentFriendsList").style.display = "";
 
     }
     else {
+        showingResults = true;
         document.getElementById("pageTitle").innerHTML = `Results(${resultCount})`;
         document.getElementById("searchResultsList").style.display = "";
         document.getElementById("currentFriendsList").style.display = "none";
@@ -44,9 +46,10 @@ const toggleFriendsList = resultCount => {
 
 
 const getCurrentFriendsList = () => {
-    fetch(`${apiUrl}/api/${apiVersion}/friends`)
+    fetch(`${apiUrl}${apiVersion}/friends`)
     .then((response) => response.json())
     .then((data) => {
+        console.log(data);
         populateCurrentFriendsList(data);
     });
 }
@@ -113,7 +116,7 @@ const generateFriendItem = (friend, type) => {
     else {
         let addBtn = document.createElement("div");
         addBtn.classList.add("accept");
-        addBtn.innerHTML = "+";
+        addBtn.innerHTML = "&plus;";
         addBtn.addEventListener("click", () => {addFriend(friend.id)});
         btnArea.appendChild(addBtn);
     }
@@ -124,23 +127,36 @@ const generateFriendItem = (friend, type) => {
     return container;
 }
 
+const showMessage = message => {
+    document.getElementById("messageText").innerHTML = message;
+    document.getElementById("messageContainer").classList.add("show");
+    setTimeout(() => {
+        document.getElementById("messageContainer").classList.remove("show");
+    }, 1500);
+}
 
-const acceptFriendRequest = () => {
+
+
+//PENDING
+const acceptFriendRequest = (friendId) => {
     //fetch request to accept request. Do not know what info to send yet
 }
-
-const declineFriendRequest = () => {
+//PENDING
+const declineFriendRequest = (friendId) => {
     //fetch request to decline request. Do not know what info to send yet
 }
-
-const addFriend = () => {
+//SEARCH
+const addFriend = (friendId) => {
     //fetch request to add friend. Do not know what info to send yet
+    showMessage("Friend request sent");
 }
-const removeFriend = () => {
+//CURRENT
+const removeFriend = (friendId) => {
     //fetch request to remove friend. Do not know what info to send yet
+
+    showMessage("Friend has been removed");
 }
 
-document.getElementById("cancelBtn").addEventListener("click", () => {backToApp();});
 document.getElementsByClassName("back-arrow")[0].addEventListener("click", () => {backToApp();});
 
 document.getElementById("friendSearchInput").addEventListener("input", () => {updateResultList()});
