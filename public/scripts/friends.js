@@ -1,6 +1,11 @@
 let timer;
 let showingResults = false;
 
+const backToApp = () => {
+    window.location.href = "/app";
+}
+
+
 const updateResultList = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -135,7 +140,8 @@ const removeFriend = () => {
     //fetch request to remove friend. Do not know what info to send yet
 }
 
-
+document.getElementById("cancelBtn").addEventListener("click", () => {backToApp();});
+document.getElementsByClassName("back-arrow")[0].addEventListener("click", () => {backToApp();});
 
 document.getElementById("friendSearchInput").addEventListener("input", () => {updateResultList()});
 getCurrentFriendsList();

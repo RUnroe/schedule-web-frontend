@@ -12,7 +12,6 @@ const validateForm = () => {
     results.push(validateField(lNameInput, validateName));
     results.push(validateField(passInput, validatePassword));
     results.push(confirmPass(confirmPassInput, passInput, confirmPassword));
-    console.log(results);
     let retValue = true;
     results.forEach(result => {
         if (!result) retValue = false;
