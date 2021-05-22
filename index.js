@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const session = require("express-session");
+require('dotenv').config();
+
 
 
 const app = express();
@@ -8,24 +10,8 @@ const app = express();
 app.set("views", __dirname + "/views");
 app.use(express.static(path.join(__dirname + "/public")));
 
-// app.use(
-//     session({
-//       secret: require('./secrets').session.secret
-//           , name: 'bifrost.session'
-//       , resave: false
-//       , saveUninitialized: false
-//           , cookie: {
-//               httpOnly: true
-//               , secure: false // only run this behind a secure proxy i guess
-//               , sameSite: true
-//               , maxAge: 1000 * 60 * 60 * 24 * process.env.SESSION_LIFETIME_DAYS // ms; this is 90 days
-//           }
-//           , store: new CassandraStore({
-//               table: require('./secrets').session.store_table
-//               , client: db.db
-//           })
-//     })
-//   );
+app.use(require('./init-session'));
+
 
 let routeFiles = ['frontend'];
 const routeManager = require('./routes/manager');

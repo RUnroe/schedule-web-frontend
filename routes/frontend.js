@@ -2,25 +2,34 @@ const path = require('path');
 const fileDirectory = path.resolve(__dirname, '.', '../public/html/');
 
 
+//////////////////////////////////////////////////////////////////
+// const requireAuth = (req, res, next) => {
+//   if (req.session.user_id) {
+//     next();
+//   } else {
+//     res.redirect("/");
+//   }
+// };
 
+// // if they're already logged in, redirect them to /app
+// const requireNotAuth = (req, res, next) => {
+//   if (req.session.user_id) {
+//     res.redirect("/app");
+//   } else {
+//     next();
+//   }
+// };
+
+//////////////////////////////////////////////////////////////////
 const requireAuth = (req, res, next) => {
-    // if (req.session.user_id) {
-    //     next();
-    // } else {
-    //     res.redirect("/");
-    // }
     next();
 };
 
 // if they're already logged in, redirect them to /app
 const requireNotAuth = (req, res, next) => {
-    // if (req.session.user_id) {
-    //     res.redirect("/app");
-    // } else {
-    //     next();
-    // }
-    next();
+  next();
 };
+/////////////////////////////////////////////////////////////////
 
 
 const index = (req, res) => {
@@ -62,6 +71,10 @@ const friends = (req, res) => {
 };
 
 
+
+
+
+
 const routes = [
     {
       uri: "/",
@@ -97,7 +110,8 @@ const routes = [
         uri: "/friends",
         methods: ["get"],
         handler: [requireAuth, friends]
-    }
+    },
+
     
 ];
 
