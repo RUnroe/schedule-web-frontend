@@ -17,9 +17,21 @@ const validateForm = () => {
 const postData = () => {
     //TODO 
     //fetch data. If valid, go to app page. If not, get angy
+    const data = {
+        email:    emailInput.value,
+        password: passInput.value
+    };
+
+    fetch(`${apiUrl}${apiVersion}/auth`, {
+        method: 'POST',
+        mode: "cors",
+        body: JSON.stringify(data)
+    }).then((response) => {
+        if(response.status == 204) window.location.href = "/app";
+        else document.getElementById("errorMsg").classList.remove("hidden");
+    });
 
 
-    // window.location.href = "/app";
 }
 
 

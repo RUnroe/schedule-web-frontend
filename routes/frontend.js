@@ -3,32 +3,33 @@ const fileDirectory = path.resolve(__dirname, '.', '../public/html/');
 
 
 //////////////////////////////////////////////////////////////////
-// const requireAuth = (req, res, next) => {
-//   if (req.session.user_id) {
-//     next();
-//   } else {
-//     res.redirect("/");
-//   }
-// };
-
-// // if they're already logged in, redirect them to /app
-// const requireNotAuth = (req, res, next) => {
-//   if (req.session.user_id) {
-//     res.redirect("/app");
-//   } else {
-//     next();
-//   }
-// };
-
-//////////////////////////////////////////////////////////////////
 const requireAuth = (req, res, next) => {
+  console.log(req.session);
+  if (req.session.user_id) {
     next();
+  } else {
+    res.redirect("/");
+  }
 };
 
 // if they're already logged in, redirect them to /app
 const requireNotAuth = (req, res, next) => {
-  next();
+  if (req.session.user_id) {
+    res.redirect("/app");
+  } else {
+    next();
+  }
 };
+
+//////////////////////////////////////////////////////////////////
+// const requireAuth = (req, res, next) => {
+//     next();
+// };
+
+// // if they're already logged in, redirect them to /app
+// const requireNotAuth = (req, res, next) => {
+//   next();
+// };
 /////////////////////////////////////////////////////////////////
 
 

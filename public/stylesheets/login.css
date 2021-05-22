@@ -59,7 +59,10 @@ button.link {
 }
 
 
-
+#errorMsg {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
 
 @media all and (max-width: 800px) {
     .image-area > div {

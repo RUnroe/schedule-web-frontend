@@ -10,6 +10,7 @@ const app = express();
 app.set("views", __dirname + "/views");
 app.use(express.static(path.join(__dirname + "/public")));
 
+// console.log(process.env);
 app.use(require('./init-session'));
 
 
