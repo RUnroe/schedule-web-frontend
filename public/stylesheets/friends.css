@@ -109,7 +109,10 @@ h1 {
 #searchResultsList .accept {
     font-size: 1.7rem;
 }
-
+#searchResultsList .friend-item {
+    height:4rem;
+    padding: 0.5rem 1rem 0rem 0.5rem;
+}
 
 #messageContainer {
     position:fixed;

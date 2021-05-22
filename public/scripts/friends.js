@@ -1,5 +1,6 @@
 let timer;
 let showingResults = false;
+let friendsList = {};
 
 const backToApp = () => {
     window.location.href = "/app";
@@ -50,6 +51,7 @@ const getCurrentFriendsList = () => {
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
+        friendsList = data;
         populateCurrentFriendsList(data);
     });
 }
@@ -114,11 +116,13 @@ const generateFriendItem = (friend, type) => {
         btnArea.appendChild(removeBtn);
     }
     else {
+        if(!friend.pending) {
         let addBtn = document.createElement("div");
         addBtn.classList.add("accept");
         addBtn.innerHTML = "&plus;";
         addBtn.addEventListener("click", () => {addFriend(friend.id)});
         btnArea.appendChild(addBtn);
+        }
     }
 
     // container.appendChild(imageContainer);
