@@ -20,12 +20,23 @@ const validateForm = () => {
 } 
 
 const postData = () => {
-    //TODO 
-    console.log(
-        emailInput.value,
-        fNameInput.value + " " + lNameInput.value
-    );
-    // window.location.href = "/login";
+    const data = {
+        email: emailInput.value
+      , password: passInput.value
+      , first_name: fNameInput.value
+      , last_name: lNameInput.value
+      };
+      fetch(`${apiUrl}${apiVersion}/auth`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: new Headers({'Content-Type': 'application/json'})
+      }).then((response) => {
+        if(response.status == 201) window.location.href = "/app";
+        else {
+            let errors = response.json();
+            document.getElementById("errorMsg").innerHTML = errors[0];
+        }
+    });
 }
 
 const confirmPass = (confirmField, passField, validationCallback) => {

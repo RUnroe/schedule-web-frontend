@@ -54,6 +54,10 @@ img {
     max-width: 100%;
 }
 
+#errorMsg {
+    text-align: center;
+    margin:0.25rem 0;
+}
 
 @media all and (max-width: 800px) {
     .image-area > div {
