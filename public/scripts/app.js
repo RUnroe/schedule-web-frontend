@@ -262,13 +262,16 @@ const showMonthEvents = (year, month) => {
     });
 
     activeCalendars.forEach(id => {
-        allCalendars[id].forEach(event => {
-            let evtStartDate = new Date(event.start);
-            if ((evtStartDate.getMonth() + 1) == month && evtStartDate.getFullYear() == year) {
-                addMonthEvent(id, event);
-            }
-        });
+        if(allCalendars[id]) {
+            allCalendars[id].forEach(event => {
+                let evtStartDate = new Date(event.start);
+                if ((evtStartDate.getMonth() + 1) == month && evtStartDate.getFullYear() == year) {
+                    addMonthEvent(id, event);
+                }
+            });
+        }
         if (document.getElementById(id)) document.getElementById(id).parentNode.classList.add("color-" + activeCalendars.indexOf(id));
+        
     });
 
 
@@ -447,14 +450,16 @@ const showWeekEvents = () => {
     });
     
     activeCalendars.forEach(id => {
-        allCalendars[id].forEach(event => {
-            let evtStartDate = dayjs(event.start);
-            currentWeekDays.forEach(weekDay => {
-                if (evtStartDate.isSame(weekDay, "day")) {
-                    addWeekEvent(id, event);
-                }
+        if(allCalendars[id]) {
+            allCalendars[id].forEach(event => {
+                let evtStartDate = dayjs(event.start);
+                currentWeekDays.forEach(weekDay => {
+                    if (evtStartDate.isSame(weekDay, "day")) {
+                        addWeekEvent(id, event);
+                    }
+                });
             });
-        });
+        }
         if (document.getElementById(id)) document.getElementById(id).parentNode.classList.add("color-" + activeCalendars.indexOf(id));
     });
     adjustWidthOfWeekEvents();
@@ -502,7 +507,6 @@ const adjustWidthOfWeekEvents = () => {
             dayColumn.childNodes.forEach(observedEvent => {
                 if(selectedEvent != observedEvent) {
                     if(areNeighbors(selectedEvent, observedEvent)) {
-                        console.log(selectedEvent, observedEvent);
                         if(observingBeforeSelected) selectedEvent.dataset.leftNeighbors = parseInt(selectedEvent.dataset.leftNeighbors) + 1;
                         else selectedEvent.dataset.rightNeighbors = parseInt(selectedEvent.dataset.rightNeighbors) + 1;
                     }
