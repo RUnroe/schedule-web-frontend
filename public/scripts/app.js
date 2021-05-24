@@ -573,7 +573,7 @@ const formatTime = time => {
 const getName = id => {
     let name = "You";
     friendsList.forEach(friend => {
-        if (friend.id == id) name = friend.name;
+        if (friend.user_id == id) name = friend.name;
     });
     return name;
 }
@@ -591,7 +591,7 @@ const populateFriendsList = () => {
         friendItem.classList.add("friend-item");
 
         const checkbox = document.createElement("input");
-        checkbox.id = friend.id;
+        checkbox.id = friend.user_id;
         checkbox.setAttribute("type", "checkbox");
         checkbox.addEventListener("change", () => {
             toggleActiveCalendar(checkbox.id);
@@ -600,7 +600,7 @@ const populateFriendsList = () => {
 
         const label = document.createElement("label");
         label.innerHTML = friend.name;
-        label.setAttribute("for", friend.id);
+        label.setAttribute("for", friend.user_id);
         friendItem.appendChild(label);
 
         document.getElementById("friendCalendarList").appendChild(friendItem);
