@@ -10,23 +10,27 @@ const backToApp = () => {
 const updateResultList = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-        let searchTerm = document.getElementById("friendSearchInput").value; 
-        if(searchTerm) {
-            searchTerm = searchTerm.trim();
-            searchTerm = searchTerm.replaceAll(" ", "+");
-
-            fetch(`${apiUrl}${apiVersion}/friends/search?q=${searchTerm}`)
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-                populateResultsList(data);
-                if(!showingResults) toggleFriendsList(data.length); 
-            });
-        }
-        else {
-            if(showingResults) toggleFriendsList(0); 
-        }
+        getResultData();
     }, 1000);
+}
+
+const getResultData = () => {
+    let searchTerm = document.getElementById("friendSearchInput").value; 
+    if(searchTerm) {
+        searchTerm = searchTerm.trim();
+        searchTerm = searchTerm.replaceAll(" ", "+");
+
+        fetch(`${apiUrl}${apiVersion}/friends/search?q=${searchTerm}`)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            populateResultsList(data);
+            if(!showingResults) toggleFriendsList(data.length); 
+        });
+    }
+    else {
+        if(showingResults) toggleFriendsList(0); 
+    }
 }
 
 const toggleFriendsList = resultCount => {
@@ -154,23 +158,56 @@ const showMessage = message => {
 
 
 //PENDING
-const acceptFriendRequest = (friendId) => {
+const acceptFriendRequest = (friendshipId) => {
     //fetch request to accept request. Do not know what info to send yet
+    fetch(`${apiUrl}${apiVersion}/friends/${friendshipId}`, {method: 'PUT'})
+    .then(response => {
+        if(response.status == 204) {
+            //Remove from pending list
+            //Add to current list
+            getCurrentFriendsList();
+        }
+
+  });
 }
 //PENDING
-const declineFriendRequest = (friendId) => {
+const declineFriendRequest = (friendshipId) => {
     //fetch request to decline request. Do not know what info to send yet
+    fetch(`${apiUrl}${apiVersion}/friends/${friendshipId}`, {method: 'DELETE'})
+    .then(response => {
+        if(response.status == 204) {
+            //Remove from pending list
+            getCurrentFriendsList();
+        }
+
+  });
+    
 }
 //SEARCH
 const addFriend = (friendId) => {
     //fetch request to add friend. Do not know what info to send yet
-    showMessage("Friend request sent");
+    fetch(`${apiUrl}${apiVersion}/friends/${friendId}`, {method: 'POST'})
+    .then(response => {
+        if(response.status == 202) {
+            showMessage("Friend request sent");
+            //Remove add option from friend item html
+            getResultData();
+        }
+
+  });
 }
 //CURRENT
-const removeFriend = (friendId) => {
+const removeFriend = (friendshipId) => {
     //fetch request to remove friend. Do not know what info to send yet
+    fetch(`${apiUrl}${apiVersion}/friends/${friendshipId}`, {method: 'DELETE'})
+    .then(response => {
+        if(response.status == 204) {
+            showMessage("Friend has been removed");
+            //Remove from current friends list
+            getCurrentFriendsList();
+        }
 
-    showMessage("Friend has been removed");
+  });
 }
 
 document.getElementsByClassName("back-arrow")[0].addEventListener("click", () => {backToApp();});
