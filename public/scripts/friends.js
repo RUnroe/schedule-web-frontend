@@ -18,6 +18,7 @@ const updateResultList = () => {
             fetch(`${apiUrl}${apiVersion}/friends/search?q=${searchTerm}`)
             .then((response) => response.json())
             .then((data) => {
+                console.log(data);
                 populateResultsList(data);
                 if(!showingResults) toggleFriendsList(data.length); 
             });
@@ -50,15 +51,21 @@ const getCurrentFriendsList = () => {
     fetch(`${apiUrl}${apiVersion}/friends`)
     .then((response) => response.json())
     .then((data) => {
-        console.log(data);
-        let list = [];
-        Object.keys(data).forEach(dataKey => {
-            let obj = {id: dataKey};
-            list.push(Object.assign(obj, data[dataKey]));
-        });
-        friendsList = list;
-        populateCurrentFriendsList(data);
+        const newData = {current: objToList(data.current), pending: objToList(data.pending)}
+        console.log(data, newData);
+        
+        friendsList = newData;
+        populateCurrentFriendsList(newData);
     });
+}
+
+const objToList = (object) => {
+    let list = [];
+    Object.keys(object).forEach(dataKey => {
+        let obj = {id: dataKey};
+        list.push(Object.assign(obj, object[dataKey]));
+    });
+    return list;
 }
 
 const populateCurrentFriendsList = data => {
