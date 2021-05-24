@@ -677,7 +677,13 @@ fetch(`${apiUrl}${apiVersion}/friends/current`, {
     return response.json();
 })
 .then(data => {
-    friendsList = data;
+    let list = [];
+    Object.keys(data).forEach(dataKey => {
+        let obj = {id: dataKey};
+        list.push(Object.assign(obj, data[dataKey]));
+    });
+
+    friendsList = list;
     populateFriendsList();
 });
 

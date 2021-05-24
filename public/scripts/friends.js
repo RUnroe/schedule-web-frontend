@@ -51,7 +51,12 @@ const getCurrentFriendsList = () => {
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
-        friendsList = data;
+        let list = [];
+        Object.keys(data).forEach(dataKey => {
+            let obj = {id: dataKey};
+            list.push(Object.assign(obj, data[dataKey]));
+        });
+        friendsList = list;
         populateCurrentFriendsList(data);
     });
 }
@@ -120,7 +125,7 @@ const generateFriendItem = (friend, type) => {
         let addBtn = document.createElement("div");
         addBtn.classList.add("accept");
         addBtn.innerHTML = "&plus;";
-        addBtn.addEventListener("click", () => {addFriend(friend.id)});
+        addBtn.addEventListener("click", () => {addFriend(friend.user_id)});
         btnArea.appendChild(addBtn);
         }
     }
