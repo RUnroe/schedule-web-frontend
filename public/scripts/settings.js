@@ -4,7 +4,7 @@ let newId = 0;
 
 
 const getCalendarList = () => {
-    fetch(`${apiUrl}${apiVersion}/friends`) //TODO: Update link
+    fetch(`${apiUrl}${apiVersion}/friends`) 
     .then((response) => response.json())
     .then((data) => {
         userCalendarList = data;
@@ -194,16 +194,8 @@ const backToApp = () => {
 }
 
 const saveChanges = () => {
-    let modifiedList = userCalendarList.map(calendar => {
-        if(calendar.id.includes("replace")) {
-            let newCalendar = calendar;
-            newCalendar.id = null;
-            return newCalendar;
-        }
-        return calendar;
-    });
     let calObject = {};
-    modifiedList.forEach(calendar => {
+    userCalendarList.forEach(calendar => {
         calObject[calendar.id] = {
             name: calendar.name,
             url: calendar.url,
