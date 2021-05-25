@@ -16,19 +16,44 @@ const validateForm = () => {
 
 const postData = () => {
     //TODO 
-    //If fetch put request comes back with 200, send to app page 
-    // window.location.href = "/app";
+    const userData = {
+        first_name: fNameInput.value,
+        last_name: lNameInput.value
+    }
+    //If fetch put request comes back with 204, send to app page 
+    fetch(`${apiUrl}${apiVersion}/auth`, {
+        method: "PUT",
+        credentials: credentials,
+        body: JSON.stringify(userData),
+        headers: new Headers({'Content-Type': 'application/json'})
+    })
+    .then(response => {
+        if(response.status == 204) backToApp();
+        //else uh oh
+    });
+   
 }
 
+
+
+const getUserData = () => {
+    //fetch current user data. Set input field values to results of fetch 
+    fetch(`${apiUrl}${apiVersion}/auth`)
+    .then(response => (response.json()))
+    .then((data) => {
+        emailInput.value = data.email,
+        fNameInput.value = data.first_name,
+        lNameInput.value = data.last_name
+    });
+}
+
+const logUserOut = () => {
+    //TODO
+}
 
 const backToApp = () => {
     window.location.href = "/app";
 }
-
-const getUserData = () => {
-    //fetch current user data. Set input field values to results of fetch 
-}
-
 
 fNameInput.addEventListener("focusout", () => {
     validateField(fNameInput, validateName);
@@ -44,7 +69,9 @@ document.getElementById("saveBtn").addEventListener("click", () => {
     if(validateForm()) postData();
 });
 
+document.getElementById("logoutBtn").addEventListener("click", () => {
+    logUserOut();
+});
+
 getUserData();
 
-
-//TODO logout button
