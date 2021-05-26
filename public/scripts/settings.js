@@ -204,8 +204,15 @@ const saveChanges = () => {
     });
     console.log(calObject);
     //fetch request. Send calendar list to backend
-
-    // backToApp();
+    fetch(`${apiUrl}${apiVersion}/calendars`, {
+        method: "PUT",
+        body: JSON.stringify(calObject),
+        headers: new Headers({'Content-Type': 'application/json'}),
+        // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: credentials
+    }).then(response => {
+        backToApp();
+    });
 }
 
 const isTextValid = text => {
