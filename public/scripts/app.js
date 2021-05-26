@@ -8,7 +8,7 @@ const INITIAL_DAY =   dayjs().format("D");
 let calendarViewMode = "month";
 
 //get from backend
-let currentUserId = "18162393822390028";
+let currentUserId;
 
 //List of friends : ids and names
 let friendsList = [];
@@ -670,6 +670,19 @@ const getCalendarData = async (userId) => {
             allCalendars[userId] = data[userId];
         });
 }
+
+
+const getUserData = () => {
+    fetch(`${apiUrl}${apiVersion}/auth`)
+    .then(response => response.json())
+    .then(data => {
+        currentUserId = data.user_id;
+        document.getElementById("profileName").innerHTML = `${data.first_name} ${data.last_name}`;
+        getCalendarData(currentUserId).then(() => (showMonthView()));
+    });
+}
+
+
 //FETCH friends list
 fetch(`${apiUrl}${apiVersion}/friends/current`, {
     method: "GET",
@@ -729,4 +742,4 @@ document.getElementById("toggleMenuBtn").addEventListener("click", () => {
     document.getElementById("leftMenu").classList.toggle("expanded");
 });
 
-getCalendarData(currentUserId).then(() => (showMonthView()));
+getUserData();
