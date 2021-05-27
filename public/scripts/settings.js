@@ -204,7 +204,7 @@ const saveChanges = () => {
     });
     console.log(calObject);
     //fetch request. Send calendar list to backend
-    fetch(`${apiUrl}${apiVersion}/calendars`, {
+    fetch(`${apiUrl}${apiVersion}/calendars/details`, {
         method: "PUT",
         body: JSON.stringify(calObject),
         headers: new Headers({'Content-Type': 'application/json'}),
