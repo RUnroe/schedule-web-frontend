@@ -26,7 +26,7 @@ const postData = () => {
       , first_name: fNameInput.value
       , last_name: lNameInput.value
       };
-      fetch(`${apiUrl}${apiVersion}/auth`, {
+      fetch(`${apiUrl}${apiVersion}/auth/create`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: new Headers({'Content-Type': 'application/json'})
