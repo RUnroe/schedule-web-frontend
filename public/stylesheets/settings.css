@@ -45,7 +45,7 @@ header h1 {
 }
 .calendar-item {
     display:grid;
-    grid-template-columns: 4fr 7fr 2fr;
+    grid-template-columns: 3fr 7fr 2fr;
     border-bottom: 2px solid var(--color-brown-medium);
     padding:1rem 1rem 0.8rem 1rem;
     transition: opacity 0.2s ease;
@@ -55,6 +55,14 @@ header h1 {
 }
 .calendar-item .delete {
     text-align: center;
+}
+
+.calendar-ics {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 .5rem;
+    box-sizing: border-box;
 }
 
 .calendar-item input {
