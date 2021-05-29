@@ -32,10 +32,13 @@ const postData = () => {
         headers: new Headers({'Content-Type': 'application/json'})
       }).then((response) => {
         if(response.status == 201) window.location.href = "/app";
-        else {
-            let errors = response.json();
-            document.getElementById("errorMsg").innerHTML = errors[0];
-        }
+        return response.json();
+        // else {
+           
+        // }
+    }).then(errors => {
+        console.log(errors);
+        document.getElementById("errorMsg").innerHTML = errors[0];
     });
 }
 

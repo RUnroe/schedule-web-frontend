@@ -21,10 +21,11 @@ const postData = () => {
         email:    emailInput.value,
         password: passInput.value
     };
-
+    
     fetch(`${apiUrl}${apiVersion}/auth`, {
         method: 'POST',
         mode: "cors",
+        headers: new Headers({'Content-Type': 'application/json'}),
         body: JSON.stringify(data)
     }).then((response) => {
         if(response.status == 204) window.location.href = "/app";
@@ -46,6 +47,7 @@ passInput.addEventListener("focusout", () => {
 
 
 document.getElementById("loginBtn").addEventListener("click", () => {
-    if(validateForm()) postData();
+    //if(validateForm()) postData();
+    postData();
 });
 

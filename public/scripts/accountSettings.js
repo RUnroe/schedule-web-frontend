@@ -49,6 +49,11 @@ const getUserData = () => {
 
 const logUserOut = () => {
     //TODO
+    fetch(`${apiUrl}${apiVersion}/auth`, {
+        method: "DELETE"
+    }).then(response => {
+        window.location = "/";
+    });
 }
 
 const backToApp = () => {
