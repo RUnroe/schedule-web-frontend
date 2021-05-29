@@ -481,7 +481,9 @@ const addWeekEvent = (userId, event) => {
 
    
     eventDiv.style.marginTop = `${dayjs(event.start).hour() * 3}rem`;
-    eventDiv.style.height = `${((dayjs(event.end).hour() - dayjs(event.start).hour()) * 3)-0.1}rem`;
+    let minuteDifference = (dayjs(event.end).minute() - dayjs(event.start).minute());
+    let heightAdjust = minuteDifference / 60;
+    eventDiv.style.height = `${(((dayjs(event.end).hour() - dayjs(event.start).hour()) + heightAdjust) * 3)-0.1}rem`;
 
     eventDiv.dataset.startTime = `${dayjs(event.start).hour()}:${dayjs(event.start).minute()}`;
     eventDiv.dataset.endTime = `${dayjs(event.end).hour()}:${dayjs(event.end).minute()}`;
