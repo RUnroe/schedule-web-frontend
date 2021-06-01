@@ -74,6 +74,8 @@ const objToList = (object) => {
 }
 
 const populateCurrentFriendsList = data => {
+    document.getElementById("pendingFriends").innerHTML = "";
+    document.getElementById("allFriends").innerHTML = "";
     data.pending.forEach(friend => {
         document.getElementById("pendingFriends").appendChild(generateFriendItem(friend, "pending"));
     });
