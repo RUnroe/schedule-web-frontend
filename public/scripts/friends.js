@@ -25,6 +25,7 @@ const getResultData = () => {
         .then((data) => {
             console.log(data);
             populateResultsList(data);
+            document.getElementById("pageTitle").innerHTML = `Results(${data.length})`;
             if(!showingResults) toggleFriendsList(data.length); 
         });
     }
